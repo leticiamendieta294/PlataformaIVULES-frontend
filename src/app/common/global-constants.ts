@@ -3,12 +3,6 @@ export class GlobalConstants {
 	//public static apiUrlBackend: string = "http://localhost:8080/auth";
 public static apiUrlBackend: string = "http://localhost:8080/ivules/auth";
 
-	//produccion
-	//public static apiUrlBackend: string = "http://bienestar.pol.una.py:8080/sigebi/auth";
-
-//public static apiUrlBackend: string = "https://nidtec.pol.una.py:55788/ivules/auth";
-
-//public static apiUrlBackend: string = "https://nidtec.pol.una.py:55780/ivules/auth";
 
 
     public static imagenReporteListas: string = "http://datatables.net/media/images/logo-fade.png"
