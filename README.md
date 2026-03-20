@@ -34,6 +34,10 @@ Este frontend proporciona una interfaz de usuario responsive e intuitiva para:
 - Node.js 18.x (compatible con Angular 9)
 - NPM 8.x
 
+### AVISO
+
+⚠️ AVISO: Este software fue desarrollado con fines de investigación académica. Su uso en entornos clínicos reales requiere validación institucional y cumplimiento de normativas locales de salud. Los autores no se hacen responsables por el uso indebido de la herramienta.
+
 ## ⚙️ Instalación
 
 ```bash
@@ -50,6 +54,4 @@ ng serve
 # La aplicación estará disponible en:
 # http://localhost:4200
 
-### AVISO
 
-⚠️ AVISO: Este software fue desarrollado con fines de investigación académica. Su uso en entornos clínicos reales requiere validación institucional y cumplimiento de normativas locales de salud. Los autores no se hacen responsables por el uso indebido de la herramienta.
