@@ -4,8 +4,7 @@
 [![Angular](https://img.shields.io/badge/Angular-9-red.svg)](https://angular.io/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-4.0-blue.svg)](https://www.typescriptlang.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-18.x-green.svg)](https://nodejs.org/)
-[![CI/CD](https://github.com/leticiamendieta/ivules-frontend/actions/workflows/deploy-angular9.yml/badge.svg)](https://github.com/leticiamendieta/ivules-frontend/actions/workflows/deploy-angular9.yml)
-[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Demo-brightgreen.svg)](https://leticiamendieta.github.io/ivules-frontend/)
+
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ## 📋 Descripción
