@@ -38,6 +38,15 @@ Este frontend proporciona una interfaz de usuario responsive e intuitiva para:
 
 ⚠️ AVISO: Este software fue desarrollado con fines de investigación académica. Su uso en entornos clínicos reales requiere validación institucional y cumplimiento de normativas locales de salud. Los autores no se hacen responsables por el uso indebido de la herramienta.
 
+##  Agradecimientos
+
+Este trabajo no habría sido posible sin el apoyo y la colaboración de las siguientes personas e instituciones:
+- **Dr. Christian E. Schaerer** (tutor)
+- **Dra. Isabel Acosta** y equipo de reumatología y bioquímicos - Facultad de Ciencias Médicas (UNA)
+- **Facultad Politécnica (UNA)** y colaboradores - Maestría en TIC
+- **Proyecto PINV01-685**
+- **FEEI-PROCIENCIA-CONACYT**
+
 ## ⚙️ Instalación
 
 ```bash
