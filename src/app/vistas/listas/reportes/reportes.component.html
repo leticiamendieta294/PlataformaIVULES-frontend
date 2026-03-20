@@ -1,0 +1,37 @@
+<div class="row">
+    <div class="col-sm-6">
+      <div class="card">
+        <div  class="card-header  text-center" style="background-color: #D7DBDD ;">
+            Excel parte Clínica
+        </div>
+        <div class="card-body">
+         
+          <button type="button" class="btn border border-dark btn-danger" (click)="cuestionariobasal($event) ">Basal</button>  
+          <button type="button" class="btn border border-dark btn-info" (click)="seguimiento($event,1) ">Seguimiento 1</button>  
+          
+          <button type="button" class="btn border border-dark btn-info" (click)="seguimiento($event,2) ">Seguimiento 2</button>
+          <button type="button" class="btn border border-dark btn-info" (click)="seguimiento($event,3) ">Seguimiento 3</button> 
+          <button type="button" class="btn border border-dark btn-info" (click)="seguimiento($event,4) ">Seguimiento 4</button>   
+         
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <div  class="card-header text-center" style="background-color: #76D7C4;">
+            Excel parte Laboratorio- Descargar
+        </div>
+        <div class="card-body">
+          
+          <button type="button" class="btn border border-dark btn-warning" (click)="laboratorio($event,0) ">Lab 0</button>  
+          
+          <button type="button" class="btn border border-dark btn-warning" (click)="laboratorio($event,1) ">Lab 1</button>  
+          <button type="button" class="btn border border-dark btn-warning" (click)="laboratorio($event,2) ">Lab 2</button>  
+          <button type="button" class="btn border border-dark btn-warning" (click)="laboratorio($event,3) ">Lab 3</button>  
+
+          <button type="button" class="btn border border-dark btn-warning" (click)="laboratorio($event,4) ">Lab 4</button>  
+
+        </div>
+      </div>
+    </div>
+  </div>

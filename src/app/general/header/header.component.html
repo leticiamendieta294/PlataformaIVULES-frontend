@@ -1,0 +1,37 @@
+<mat-toolbar class="header">
+    <mat-toolbar-row>
+        <div class="img"> <img src="assets/images/logo.png"  width="40" alt="User-Profile-Image"></div>
+        <div class="sistema">IVULES</div>
+        <button mat-icon-button (click)="toggleSideBar()">
+            <mat-icon>menu</mat-icon>
+        </button>
+        
+        <div class="container text-right">
+            <div *ngIf="isLogged; else loggedOut">
+                <div class="img"> <img src="assets/images/profile-2.png" class="rounded-circle" width="40" alt="User-Profile-Image"></div>
+                
+                <div class="parrafo" >{{nombreUsuario}}</div>
+               
+                
+            </div>
+            <ng-template #loggedOut><p>No has iniciado sesión</p></ng-template>
+        </div>
+        <div class="icono-salir">
+            <ul fxLayout="row" fxLayoutGap="20px">
+                <li>
+                    <button mat-icon-button *ngIf="!isLogged" (click)="onLogOut()" matTooltipPosition="right"
+                    matTooltip="Iniciar Sesion">
+                        <mat-icon>account_box</mat-icon> 
+                    </button>
+                </li>
+                <li>
+                    <button mat-icon-button *ngIf="isLogged" (click)="onLogOut()" matTooltipPosition="right"
+                    matTooltip="Cerrar Sesion">
+                        <mat-icon>exit_to_app</mat-icon>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>
+

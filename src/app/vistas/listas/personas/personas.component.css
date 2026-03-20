@@ -1,0 +1,16 @@
+@import './../../listas/css/listas.css';
+
+.greenClass{
+    color: white;
+    background-color: #8cfc5f;
+}
+
+.redClass{
+    color: white;
+    background-color: rgb(255, 85, 0);
+}
+
+.yellowClass{
+    color: black;
+    background-color: yellow;
+}

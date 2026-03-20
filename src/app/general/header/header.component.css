@@ -1,0 +1,38 @@
+
+ul li {
+  list-style: none;
+}
+
+*{
+  background-color:#5271ff;
+  color: white;
+
+}
+
+.header{
+  border-bottom: 1px solid #dee2e6;
+  z-index: 1034;
+}
+
+
+.parrafo{
+  display: inline-block;
+  text-align: center;
+  position: relative;
+}
+
+.img{
+  display: inline-block;
+  width: 80px;
+
+}
+
+.sistema{
+  width: 200px;
+}
+
+.icono-salir{
+  width: 100px;
+}
+
+

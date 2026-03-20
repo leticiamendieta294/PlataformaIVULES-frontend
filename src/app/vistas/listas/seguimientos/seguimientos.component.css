@@ -1,0 +1,36 @@
+th{
+    white-space:nowrap;
+  }
+  
+  body {
+    font:400 15px sans-serif;
+  }
+
+  /*estilos para la tabla*/
+  table th {
+    background-color: #9833b7 !important;
+    color: white;
+  }
+
+  table>tbody>tr>td {
+    vertical-align: middle !important;
+  }
+
+  /*para alinear los botones y cuadro de busqueda*/
+  .btn-group, .btn-group-vertical {
+    position: absolute !important;
+  }
+.greenClass{
+    color: white;
+    background-color: #8cfc5f;
+}
+
+.redClass{
+    color: white;
+    background-color: rgb(255, 85, 0);
+}
+
+.yellowClass{
+    color: black;
+    background-color: yellow;
+}

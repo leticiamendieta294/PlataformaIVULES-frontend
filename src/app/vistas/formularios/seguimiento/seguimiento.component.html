@@ -1,0 +1,1372 @@
+<head>
+    <link rel="stylesheet" href="seguimiento.component.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+   
+    
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a  href="/">Inicio /</a>
+            </li>
+            <li class="nav-item">
+              <a href="inicio/personas"> Listado de pacientes /</a>
+            </li>
+            <li class="nav-item active" style="color: grey;">
+              Seguimiento
+            </li>
+          </ul>
+          <span class="navbar-text">
+            <button class="btn btn-secondary" (click)="opciones($event)">
+              <i class="fa fa-arrow-left"></i>
+              Regresar
+            </button>
+          </span>
+        </div>
+      </nav>
+
+
+    <div class="row animated fadeIn faster">
+        <div class="col">
+            <div class="card">
+                <div class="card-header text-center text-black" style="background-color: antiquewhite;font-weight: bold;">
+                    Seguimiento {{numeroSeguimiento}}
+                    <br>
+                    {{verPersona.codigo}}:{{verPersona.nombres}} {{verPersona.apellidos}}
+                  </div>
+                <div class="card-body">
+
+                    <form [formGroup]="seguimientoForm" (ngSubmit)="guardar( )">
+
+                        <div class="d-none">
+                            <div class="col-lg-5">
+                                <div class="form-group" [hidden]="crear">
+                                    <label><b>Id</b></label>
+                                    <input type="number" class="form-control" placeholder="seguimiento Id"
+                                        formControlName="idSeguimiento" name="id">
+                                    <small class="form-text text-muted">Este campo es autogenerado</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row justify-content-center">
+                            <div class="col-lg-10">
+                                <!-- <div class="form-group">
+                                    <label><b>Codigo</b><span class="requerido"> *</span></label>
+                                    <input autofocus type="text" class="form-control" placeholder=" IVULES01"
+                                        formControlName="codigo" name="codigo" [class.is-invalid]="codigoNoValido">
+                                    <small *ngIf="codigoNoValido" class="text-danger">
+                                        IVULES01
+                                    </small>
+                                </div>-->
+
+                                <div class="card">
+<div class="card-body">
+  <div class="form-group">
+    <label><b >Historia de IVU desde la última visita del proyecto</b> </label>
+    <select #ref ui-select2 class="form-control input-sm"
+        formControlName="historiaIVUUltimaVisitaProyecto" uppercase
+        (change)="getSelectedValue(ref.value)">
+        <option value=null>Seleccione</option>
+        <option *ngFor="let item of listaRespuesta; let i = index"
+            value="{{item.descripcionValor}}">
+            {{item.descripcionValor}}
+        </option>
+    </select>
+</div>
+
+
+
+                                <br/>
+
+                              
+                               
+                                    <div *ngIf="element == true" style="background-color: #FAE9EF;">
+
+                                      <div class="form-group">
+                                        <label><b>¿Cómo se hizo el diagnóstico?</b></label>
+                                        <select ui-select2 class="form-control input-sm"
+                                            formControlName="comoHizoDiagnostico" uppercase
+                                           >
+                                            <option value=null>Seleccione</option>
+                                            <option *ngFor="let item of listaHizoDiagnostico; let i = index" value="{{item.descripcionValor}}">
+                                                {{item.descripcionValor}}
+                                              </option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label><b>Fecha de diagnostico-(Formato dia/mes/año)</b></label>
+                                      <input type="date" class="form-control" 
+                                          formControlName="fechaDiagnostico" name="fechaDiagnostico"
+                                          placeholder="...">
+
+                                  </div>
+
+                                  <div class="form-group">
+                                    <label><b>presentoSintomas?</b></label>
+                                    <select #refPS ui-select2 class="form-control input-sm"
+                                        formControlName="presentoSintomas" uppercase uppercase (change)="getSelectedValuePS(refPS.value)">
+                                        <option value=null>Seleccione</option>
+                                        <option *ngFor="let item of listaRespuesta; let i = index"
+                                            value="{{item.descripcionValor}}">
+                                            {{item.descripcionValor}}
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <div *ngIf="elementPS == true" style="background-color: #FAE9EF;">
+                                  <label><b>Si la respuesta fue si, marque los sintomas</b></label>
+
+                                    <div class="row">
+                                      <div class="col">
+                                      <label for="Disuria"> Disuria</label>
+                                      </div>
+                                      
+                                      <div class="col bg-light">
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio" formControlName="sintomaDisuria"   id="inlineCheckbox1" value="Si"  >
+                                          <label class="form-check-label" for="inlineCheckbox1">Si</label>
+                                        </div> 
+                                       
+                                      <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="radio"  formControlName ="sintomaDisuria" id="inlineCheckbox2" value="No" >
+                                          <label class="form-check-label" for="inlineCheckbox2">No</label>
+                                        </div> 
+                      
+                                      
+                                      </div>
+                                      
+                                      </div>
+
+                                      <div class="row">
+                                        <div class="col">
+                                        <label for="Polaquiuria"> Polaquiuria</label>
+                                        </div>
+                                        
+                                        <div class="col bg-light">
+                                          <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" formControlName="sintomaPolaquiuria"   id="inlineCheckbox1" value="Si"  >
+                                            <label class="form-check-label" for="inlineCheckbox1">Si</label>
+                                          </div> 
+                                         
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio"  formControlName ="sintomaPolaquiuria" id="inlineCheckbox2" value="No" >
+                                            <label class="form-check-label" for="inlineCheckbox2">No</label>
+                                          </div> 
+                        
+                                        
+                                        </div>
+                                        
+                                        </div>
+                                        <div class="row">
+                                          <div class="col">
+                                          <label for="Tenesmo"> Tenesmo</label>
+                                          </div>
+                                          
+                                          <div class="col bg-light">
+                                            <div class="form-check form-check-inline">
+                                              <input class="form-check-input" type="radio" formControlName="sintomaTenesmo"   id="inlineCheckbox1" value="Si"  >
+                                              <label class="form-check-label" for="inlineCheckbox1">Si</label>
+                                            </div> 
+                                           
+                                          <div class="form-check form-check-inline">
+                                              <input class="form-check-input" type="radio"  formControlName ="sintomaTenesmo" id="inlineCheckbox2" value="No" >
+                                              <label class="form-check-label" for="inlineCheckbox2">No</label>
+                                            </div> 
+                          
+                                          
+                                          </div>
+                                          
+                                          </div>
+                                  
+                                            <div class="row">
+                                              <div class="col">
+                                              <label for="Hematuria"> Hematuria</label>
+                                              </div>
+                                              
+                                              <div class="col bg-light">
+                                                <div class="form-check form-check-inline">
+                                                  <input class="form-check-input" type="radio" formControlName="sintomaHematuria"   id="inlineCheckbox1" value="Si"  >
+                                                  <label class="form-check-label" for="inlineCheckbox1">Si</label>
+                                                </div> 
+                                               
+                                              <div class="form-check form-check-inline">
+                                                  <input class="form-check-input" type="radio"  formControlName ="sintomaHematuria" id="inlineCheckbox2" value="No" >
+                                                  <label class="form-check-label" for="inlineCheckbox2">No</label>
+                                                </div> 
+                              
+                                              
+                                              </div>
+                                              
+                                              </div>
+                                              <div class="row">
+                                                <div class="col">
+                                                <label for="PresionAbdomen"> Presión o retorcijones en la parte inferior del abdomen</label>
+                                                </div>
+                                                
+                                                <div class="col bg-light">
+                                                  <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" formControlName="sintomaPresionAbdomen"   id="inlineCheckbox1" value="Si"  >
+                                                    <label class="form-check-label" for="inlineCheckbox1">Si</label>
+                                                  </div> 
+                                                 
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio"  formControlName ="sintomaPresionAbdomen" id="inlineCheckbox2" value="No" >
+                                                    <label class="form-check-label" for="inlineCheckbox2">No</label>
+                                                  </div> 
+                                
+                                                
+                                                </div>
+                                                
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col">
+                                                  <label for="Urgencia"> Urgencia</label>
+                                                  </div>
+                                                  
+                                                  <div class="col bg-light">
+                                                    <div class="form-check form-check-inline">
+                                                      <input class="form-check-input" type="radio" formControlName="sintomaUrgencia"   id="inlineCheckbox1" value="Si"  >
+                                                      <label class="form-check-label" for="inlineCheckbox1">Si</label>
+                                                    </div> 
+                                                   
+                                                  <div class="form-check form-check-inline">
+                                                      <input class="form-check-input" type="radio"  formControlName ="sintomaUrgencia" id="inlineCheckbox2" value="No" >
+                                                      <label class="form-check-label" for="inlineCheckbox2">No</label>
+                                                    </div> 
+                                  
+                                                  
+                                                  </div>
+                                                  
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="col">
+                                                    <label for="Fiebre"> Fiebre</label>
+                                                    </div>
+                                                    
+                                                    <div class="col bg-light">
+                                                      <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" formControlName="sintomaFiebre"   id="inlineCheckbox1" value="Si"  >
+                                                        <label class="form-check-label" for="inlineCheckbox1">Si</label>
+                                                      </div> 
+                                                     
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"  formControlName ="sintomaFiebre" id="inlineCheckbox2" value="No" >
+                                                        <label class="form-check-label" for="inlineCheckbox2">No</label>
+                                                      </div> 
+                                    
+                                                    
+                                                    </div>
+                                                    
+                                                    </div>
+                                                    <div class="row">
+                                                      <div class="col">
+                                                      <label for="Vomito"> Vómito</label>
+                                                      </div>
+                                                      
+                                                      <div class="col bg-light">
+                                                        <div class="form-check form-check-inline">
+                                                          <input class="form-check-input" type="radio" formControlName="sintomaVomito"   id="inlineCheckbox1" value="Si"  >
+                                                          <label class="form-check-label" for="inlineCheckbox1">Si</label>
+                                                        </div> 
+                                                       
+                                                      <div class="form-check form-check-inline">
+                                                          <input class="form-check-input" type="radio"  formControlName ="sintomaVomito" id="inlineCheckbox2" value="No" >
+                                                          <label class="form-check-label" for="inlineCheckbox2">No</label>
+                                                        </div> 
+                                      
+                                                      
+                                                      </div>
+                                                      
+                                                      </div>
+
+                                                      <div class="row">
+                                                        <div class="col">
+                                                        <label for="DolorLumbar"> Dolor lumbar</label>
+                                                        </div>
+                                                        
+                                                        <div class="col bg-light">
+                                                          <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" formControlName="sintomaDolorLumbar"   id="inlineCheckbox1" value="Si"  >
+                                                            <label class="form-check-label" for="inlineCheckbox1">Si</label>
+                                                          </div> 
+                                                         
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio"  formControlName ="sintomaDolorLumbar" id="inlineCheckbox2" value="No" >
+                                                            <label class="form-check-label" for="inlineCheckbox2">No</label>
+                                                          </div> 
+                                        
+                                                        
+                                                        </div>
+                                                        
+                                                        </div>
+
+
+
+                                    <div class="form-group">
+                                        <label><b>En caso de tener otro sintomas, escriba aqui</b></label>
+                                        <input type="text" class="form-control" formControlName="otroSintomasIVU" name="otroSintomasIVU" placeholder="...">
+                                      </div>
+                                   
+                                </div>
+
+                                <div class="form-group">
+                                  <label><b>¿Se trató con antibióticos?</b></label>
+                                  <select #refTANTB  ui-select2 class="form-control input-sm"
+                                    formControlName="tratoconAntibioticos" uppercase (change)="getSelectedValueTANTB(refTANTB.value)" >
+                                    <option value=null>Seleccione</option>
+                                    <option *ngFor="let item of listaRespuesta; let i = index" value="{{item.descripcionValor}}">
+                                      {{item.descripcionValor}}
+                                    </option>
+                                  </select>
+                                </div>
+              
+                                <div *ngIf="elementTANTB == true" style="background-color: #FAE9EF;">
+                                  <div class="form-group">
+                                    <label><b>Especificar...</b></label>
+                                    <input type="text" class="form-control" formControlName="tratoconAntibioticosEspecificar" name="tratoconAntobioticosEspecificar"
+                                      placeholder="....">
+                                  </div>
+                              </div>
+
+                              <div class="form-group">
+                                <label><b>Bacteriuria asintomática desde la última visita</b></label>
+                                <select #refBA  ui-select2 class="form-control input-sm"
+                                  formControlName="bacteriuriaAsintomaticaUltimaVisita" uppercase (change)="getSelectedValueBA(refBA.value)" >
+                                  <option value=null>Seleccione</option>
+                                  <option *ngFor="let item of listaRespuesta; let i = index" value="{{item.descripcionValor}}">
+                                    {{item.descripcionValor}}
+                                  </option>
+                                </select>
+                              </div>
+            
+                              <div *ngIf="elementBA == true" style="background-color: #FAE9EF;">
+                                <div class="form-group">
+                                  <label><b>¿Recibió tratamiento para la bacteriuria asintomática? .</b></label>
+                                  <select #refTBA  ui-select2 class="form-control input-sm"
+                                  formControlName="tratamientoBacteriuriaAsintomatica" uppercase (change)="getSelectedValueTBA(refTBA.value)" >
+                                  <option value=null>Seleccione</option>
+                                  <option *ngFor="let item of listaRespuesta; let i = index" value="{{item.descripcionValor}}">
+                                    {{item.descripcionValor}}
+                                  </option>
+                                </select>
+                                </div>
+
+                                <div *ngIf="elementTBA == true" style="background-color: #FAE9EF;">
+                                  <div class="form-group">
+                                    <label><b>Especificar...</b></label>
+                                    <input type="text" class="form-control" formControlName="tratamientoBacteriuriaAsintomaticaEspecificar" name="tratamientoBacteriuriaAsintomaticaEspecificar"
+                                      placeholder="....">
+                                  </div>
+                              </div>
+
+
+
+                            </div>
+
+                              <div class="form-group">
+                                  <label><b>Tipo de IVU</b></label>
+                                  <select ui-select2 class="form-control input-sm"
+                                      formControlName="tipoIVU" uppercase>
+                                      <option value=null>Seleccione</option>
+                                      <option *ngFor="let item of listaIVU; let i = index"
+                                          value="{{item.descripcionValor}}">
+                                          {{item.descripcionValor}}
+                                      </option>
+                                  </select>
+                              </div>
+
+                              <div class="form-group">
+                                <label><b>Clasificación IVU</b></label>
+                                <select ui-select2 class="form-control input-sm"
+                                    formControlName="clasificacionIVU" uppercase>
+                                    <option value=null>Seleccione</option>
+                                    <option *ngFor="let item of listaClasificacionIVU; let i = index"
+                                        value="{{item.descripcionValor}}">
+                                        {{item.descripcionValor}}
+                                    </option>
+                                </select>
+                            </div>
+
+
+                            <div class="form-group">
+                              <label><b>Severidad IVU</b></label>
+                              <select ui-select2 class="form-control input-sm"
+                                  formControlName="severidadIVU" uppercase>
+                                  <option value=null>Seleccione</option>
+                                  <option *ngFor="let item of listaSeveridadIVU; let i = index"
+                                      value="{{item.descripcionValor}}">
+                                      {{item.descripcionValor}}
+                                  </option>
+                              </select>
+                          </div>
+
+
+
+
+
+                                  
+                                     
+                                  
+                              </div>
+
+
+                              <div class="card" style="background-color: #fbc8ea;">
+                                <div class="card-body">
+                                  <div class="form-group">
+                                    <label><b >Sintomas Urinarios</b> </label>
+                                    <select #refSU ui-select2 class="form-control input-sm"
+                                        formControlName="sintomasUrinarios" uppercase
+                                        (change)="getSelectedSU(refSU.value)">
+                                        <option value=null>Seleccione</option>
+                                        <option *ngFor="let item of listaRespuesta; let i = index"
+                                            value="{{item.descripcionValor}}">
+                                            {{item.descripcionValor}}
+                                        </option>
+                                    </select>
+                                </div>
+                    
+                                <div *ngIf="elementSU == true" style="background-color: #FAE9EF;">
+                                 
+                                    <label><b>Si la respuesta fue si, marque los sintomas</b></label>
+                    
+                                      <div class="row">
+                                        <div class="col">
+                                        <label for="Disuria"> Disuria</label>
+                                        </div>
+                                        
+                                        <div class="col bg-light">
+                                          <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" formControlName="sintomaUrinarioDisuria"   id="inlineCheckbox1" value="Si"  >
+                                            <label class="form-check-label" for="inlineCheckbox1">Si</label>
+                                          </div> 
+                                         
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio"  formControlName ="sintomaUrinarioDisuria" id="inlineCheckbox2" value="No" >
+                                            <label class="form-check-label" for="inlineCheckbox2">No</label>
+                                          </div> 
+                        
+                                        
+                                        </div>
+                                        
+                                        </div>
+                    
+                                        <div class="row">
+                                          <div class="col">
+                                          <label for="Polaquiuria"> Polaquiuria</label>
+                                          </div>
+                                          
+                                          <div class="col bg-light">
+                                            <div class="form-check form-check-inline">
+                                              <input class="form-check-input" type="radio" formControlName="sintomaUrinarioPolaquiuria"   id="inlineCheckbox1" value="Si"  >
+                                              <label class="form-check-label" for="inlineCheckbox1">Si</label>
+                                            </div> 
+                                           
+                                          <div class="form-check form-check-inline">
+                                              <input class="form-check-input" type="radio"  formControlName ="sintomaUrinarioPolaquiuria" id="inlineCheckbox2" value="No" >
+                                              <label class="form-check-label" for="inlineCheckbox2">No</label>
+                                            </div> 
+                          
+                                          
+                                          </div>
+                                          
+                                          </div>
+                                          <div class="row">
+                                            <div class="col">
+                                            <label for="Tenesmo"> Tenesmo</label>
+                                            </div>
+                                            
+                                            <div class="col bg-light">
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" formControlName="sintomaUrinarioTenesmo"   id="inlineCheckbox1" value="Si"  >
+                                                <label class="form-check-label" for="inlineCheckbox1">Si</label>
+                                              </div> 
+                                             
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio"  formControlName ="sintomaUrinarioTenesmo" id="inlineCheckbox2" value="No" >
+                                                <label class="form-check-label" for="inlineCheckbox2">No</label>
+                                              </div> 
+                            
+                                            
+                                            </div>
+                                            
+                                            </div>
+                                    
+                                       
+                                             
+                                                  <div class="row">
+                                                    <div class="col">
+                                                    <label for="UrgenciaNiccional"> Urgencia miccional</label>
+                                                    </div>
+                                                    
+                                                    <div class="col bg-light">
+                                                      <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" formControlName="sintomaUrinarioUrgenciaMiccional"   id="inlineCheckbox1" value="Si"  >
+                                                        <label class="form-check-label" for="inlineCheckbox1">Si</label>
+                                                      </div> 
+                                                     
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"  formControlName ="sintomaUrinarioUrgenciaMiccional" id="inlineCheckbox2" value="No" >
+                                                        <label class="form-check-label" for="inlineCheckbox2">No</label>
+                                                      </div> 
+                                    
+                                                    
+                                                    </div>
+                                                    
+                                                    </div>
+                                                    <div class="row">
+                                                      <div class="col">
+                                                      <label for="Fiebre"> Fiebre</label>
+                                                      </div>
+                                                      
+                                                      <div class="col bg-light">
+                                                        <div class="form-check form-check-inline">
+                                                          <input class="form-check-input" type="radio" formControlName="sintomaUrinarioFiebre"   id="inlineCheckbox1" value="Si"  >
+                                                          <label class="form-check-label" for="inlineCheckbox1">Si</label>
+                                                        </div> 
+                                                       
+                                                      <div class="form-check form-check-inline">
+                                                          <input class="form-check-input" type="radio"  formControlName ="sintomaUrinarioFiebre" id="inlineCheckbox2" value="No" >
+                                                          <label class="form-check-label" for="inlineCheckbox2">No</label>
+                                                        </div> 
+                                      
+                                                      
+                                                      </div>
+                                                      
+                                                      </div>
+                                                      
+                    
+                                                        <div class="row">
+                                                          <div class="col">
+                                                          <label for="DolorSuprapubico"> Dolor suprapubico</label>
+                                                          </div>
+                                                          
+                                                          <div class="col bg-light">
+                                                            <div class="form-check form-check-inline">
+                                                              <input class="form-check-input" type="radio" formControlName="sintomaUrinarioDolorSuprapubico"   id="inlineCheckbox1" value="Si"  >
+                                                              <label class="form-check-label" for="inlineCheckbox1">Si</label>
+                                                            </div> 
+                                                           
+                                                          <div class="form-check form-check-inline">
+                                                              <input class="form-check-input" type="radio"  formControlName ="sintomaUrinarioDolorSuprapubico" id="inlineCheckbox2" value="No" >
+                                                              <label class="form-check-label" for="inlineCheckbox2">No</label>
+                                                            </div> 
+                                          
+                                                          
+                                                          </div>
+                                                          
+                                                          </div>
+                    
+                    
+                    
+                                      <div class="form-group">
+                                          <label><b>En caso de tener otro sintomas, escriba aqui</b></label>
+                                          <input type="text" class="form-control" formControlName="otroSintomasUrinarios" name="otroSintomasUrinarios" placeholder="...">
+                                        </div>
+                                     
+                                  </div>
+                                
+                    
+                                  
+            
+                                </div>
+                              </div>
+                                  
+
+                                
+
+                                
+
+                                
+                                       
+
+                                    
+
+
+
+                                           
+                                        
+
+                                           
+
+                                           
+
+                                            <div class="card" >
+                                              <div class="card-header text-center" style="background-color: #D1EDFA;"><h1 class="font-weight-bolder">Urocultivo</h1></div>
+                                              <div class="card-body">
+                                                <div class="form-group">
+                                                  <label><b>¿Se realizó urocultivo? </b></label>
+                                                  <select #refUP ui-select2 class="form-control input-sm" formControlName="urocultivoPositivo" uppercase 
+                                                  (change)="getSelectedValueUP(refUP.value)">
+                                                    <option value=null>Seleccione</option>
+                                                    <option *ngFor="let item of listaRespuesta; let i = index" value="{{item.descripcionValor}}">
+                                                      {{item.descripcionValor}}
+                                                    </option>
+                                                  </select>
+                                                </div>
+                                              </div>
+                                              <div *ngIf="elementUP == true" style="background-color: #FAE9EF;">
+                                               
+                                                    <div class="form-group">
+                                                        <label><b>Tipo de microbio</b></label>
+                                                        <input type="text" class="form-control"
+                                                        formControlName="tipoMicrobio" name="tipoMicrobio"
+                                                        placeholder="...">
+                                                    </div>
+    
+    
+                                                    <div class="form-group">
+                                                        <label><b>Marque que germen fue aislado</b></label>
+                                                        <div *ngFor="let ck of bacteriasDataList">
+                                                            <label>
+                                                              <input  #refIS  type="checkbox" [value]="ck.desc" [checked] = ck.isChecked (change)="changeBacteriasSelection(refIS.value,$event.target.checked)"/>
+                                                              {{ck.desc}}
+                                                            </label>
+                                                          </div>
+                                  
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label><b>En caso de tener otro Germen, escriba aqui</b></label>
+                                                        <input type="text" class="form-control" formControlName="otroGermenAislado" name="otroGermenAislado" placeholder="...">
+                                                      </div>
+    
+                                               
+    
+                                              
+                                              </div>
+
+                                              
+                                            </div>
+
+                                            
+
+                                            <br/>
+
+                                            <div style="background-color: #D1EDFA;">
+                                              <h1 class="font-weight-bolder text-center">Factores de Riesgo</h1>  
+                                            </div>
+
+                                            <div class="form-group">
+                                              <label><b>Menopausia</b></label>
+                                              <select #refM ui-select2 class="form-control input-sm" formControlName="menopausia" uppercase
+                                              (change)="getSelectedValueM(refM.value)">
+                                                <option value=null>Seleccione</option>
+                                                <option *ngFor="let items of listaRespuestaMenopausia; let i = index" value="{{items.descripcionValor}}">
+                                                  {{items.descripcionValor}}
+                                                </option>
+                                              </select>
+                                            </div>
+                    
+                                            
+                    
+                                            <div *ngIf="elementM == true" style="background-color: #FAE9EF;">
+                    
+                                              <div class="form-group">
+                                                <label><b>Edad Menopausia</b></label>
+                                                <input type="text" class="form-control" formControlName="edadMenopausia" name="edadMenopausia"
+                                                  placeholder="Edad menopausia">
+                                              </div>
+                            
+                                              </div>
+
+                                              <div *ngIf="elementHISTERECTOMIA == true" style="background-color: #FAE9EF;">
+
+                                                <div class="form-group">
+                                                  <label><b>Años de Histerectomía</b></label>
+                                                  <input type="text" class="form-control" formControlName="anhosHisterectomia" name="anhosHisterectomia"
+                                                    placeholder="Especificar">
+                                                </div>
+                              
+                                                </div>
+                                          
+
+
+                                              <div class="form-group">
+                                                <label><b>Sexualmente Activo</b></label>
+                                                <select #refASR ui-select2 class="form-control input-sm" formControlName="factoresRiesgoSexualmenteActivo"  (change)="getSelectedValueASR(refASR.value)"
+                                                  uppercase>
+                                                  <option value=null>Seleccione</option>
+                                                  <option *ngFor="let item of listaRespuesta; let i = index" value="{{item.descripcionValor}}">
+                                                    {{item.descripcionValor}}
+                                                  </option>
+                                                </select>
+                                              </div>
+                            
+                                              <div *ngIf="elementASNroVecesSemana == true" style="background-color: #FAE9EF;">
+                                                <div class="form-group">
+                                                  <label><b>Tipo Actividad Sexual</b></label>
+                                                    <select  ui-select2 class="form-control input-sm" formControlName="tipoActividadSexual" 
+                                                    uppercase>
+                                                    <option value=null>Seleccione</option>
+                                                    <option *ngFor="let item of LStipoActividadSexual; let i = index" value="{{item.descripcionValor}}">
+                                                      {{item.descripcionValor}}
+                                                    </option>
+                                                  </select>  
+                                                </div>
+                            
+                            
+                                                <div class="form-group">
+                                                  <label><b>Actividad Sexual - Numero de veces por semana</b></label>
+                                                  <input type="text" class="form-control" formControlName="factoresRiesgoActividadSexualNroVeces" name="factoresRiesgoActividadSexualNroVeces"
+                                                    placeholder="Nro. de veces por semana">
+                                                </div>
+                            
+                                                
+                                              </div>
+                          
+                          
+                          
+                                          
+                                         
+                                            <div class="form-group">
+                                              <label><b>Estreñimiento crónico/Constipacion crónica</b></label>
+                                              <select #refEC ui-select2 class="form-control input-sm" formControlName="factoresRiesgoEstreñimientoCronico"
+                                                uppercase (change)="getSelectedValueEC(refEC.value)">
+                                                <option value=null>Seleccione</option>
+                                                <option *ngFor="let item of listaRespuesta; let i = index" value="{{item.descripcionValor}}" >
+                                                  {{item.descripcionValor}}
+                                                </option>
+                                              </select>
+                                            </div>
+                          
+                                            <div *ngIf="elementEC == true">
+                                              <div class="row">
+                                                <div class="col-lg-5">
+                                                  <img src="../assets/images/Escala_de_Bristol.1.png" class="img-thumbnail" alt="..." width="350" height="600">
+                            
+                                                </div>
+                                                <div class="col-lg-5" style="background-color: #FAE9EF;">
+                                                  <div class="form-group">
+                                                    <label><b>Según Bristol Stool Chart Type 2 o 1</b></label>
+                                                    <select ui-select2 class="form-control input-sm" formControlName="factoresRiesgoTipoEstreñimientoCronico"
+                                                      uppercase >
+                                                      <option value=null>Seleccione</option>
+                                                      <option *ngFor="let item of listatipoestrenimientoParam; let i = index" value="{{item.descripcionValor}}" >
+                                                        {{item.descripcionValor}}
+                                                      </option>
+                                                    </select>
+                                                  </div>
+                            
+                                                </div>
+                            
+                            
+                                              </div>
+                          
+                                            </div>
+                          
+                                           
+                          
+                                           
+                                            <div class="form-group">
+                                              <label><b>Frecuencia urinaria baja</b></label>
+                                              <select ui-select2 class="form-control input-sm" formControlName="factoresRiesgoFrecuenciaUrinariaBaja"
+                                                uppercase>
+                                                <option value=null>Seleccione</option>
+                                                <option *ngFor="let item of listaRespuesta; let i = index" value="{{item.descripcionValor}}">
+                                                  {{item.descripcionValor}}
+                                                </option>
+                                              </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                              <label><b>Baja ingesta de líquidos</b></label>
+                                              <select ui-select2 class="form-control input-sm" formControlName="factoresRiesgoBajaIngestaliquidos"
+                                                uppercase>
+                                                <option value=null>Seleccione</option>
+                                                <option *ngFor="let item of listaRespuesta; let i = index" value="{{item.descripcionValor}}">
+                                                  {{item.descripcionValor}}
+                                                </option>
+                                              </select>
+                                            </div>
+                            
+                                            <div class="form-group">
+                                              <label><b>Incontinencia urinaria</b></label>
+                                              <select #refIU ui-select2 class="form-control input-sm" formControlName="factoresRiesgoIncontinenciaUrinaria"
+                                                uppercase (change)="getSelectedValueIU(refIU.value)">
+                                                <option value=null>Seleccione</option>
+                                                <option *ngFor="let item of listaRespuesta; let i = index" value="{{item.descripcionValor}}">
+                                                  {{item.descripcionValor}}
+                                                </option>
+                                              </select>
+                                            </div>
+                                            <div *ngIf="elementIU == true" style="background-color: #FAE9EF;">
+                                              <div class="form-group">
+                                                <label><b>Tipo de Incontinencia</b></label>
+                                                <select ui-select2 class="form-control input-sm" formControlName="factoresRiesgoTipoIncontinenciaUrinaria"
+                                                  uppercase >
+                                                  <option value=null>Seleccione</option>
+                                                  <option *ngFor="let item of listaTipoIncontinenciaUrinariaParam; let i = index" value="{{item.descripcionValor}}" >
+                                                    {{item.descripcionValor}}
+                                                  </option>
+                                                </select>
+                                              </div>
+                          
+                                            </div>
+                          
+                                           
+                          
+                          
+                          
+                            
+                                            <div class="form-group">
+                                              <label><b>Sondaje Vesical previo</b></label>
+                                              <select #refSV ui-select2 class="form-control input-sm" formControlName="factoresRiesgoSondajeVesicalPrevio"
+                                                uppercase (change)="getSelectedValueSV(refSV.value)">
+                                                <option value=null>Seleccione</option>
+                                                <option *ngFor="let item of listaRespuesta; let i = index" value="{{item.descripcionValor}}">
+                                                  {{item.descripcionValor}}
+                                                </option>
+                                              </select>
+                                            </div>
+                            
+                                            
+                                            <div class="form-group">
+                                              <label><b>Procedimiento urinario o ginecologico previo</b></label>
+                                              <select #refPGP ui-select2 class="form-control input-sm"
+                                                formControlName="factoresRiesgoProcedimientoUrinarioGinecPrevio" uppercase (change)="getSelectedValuePGP(refPGP.value)">
+                                                <option value=null>Seleccione</option>
+                                                <option *ngFor="let item of listaRespuesta; let i = index" value="{{item.descripcionValor}}">
+                                                  {{item.descripcionValor}}
+                                                </option>
+                                              </select>
+                                            </div>
+                                         
+
+                                          <div *ngIf="elementPGP == true" style="background-color: #FAE9EF;">
+                                            <div class="form-group">
+                                              <label><b>Especificar...</b></label>
+                                              <input type="text" class="form-control" formControlName="procedimientoUrinarioGinecPrevioEspecificar" name="procedimientoUrinarioGinecPrevioEspecificar"
+                                                placeholder="....">
+                                            </div>
+                                            <div class="form-group">
+                                              <label><b>Recibió profilaxis acorde a guías</b></label>
+                                              <select  ui-select2 class="form-control input-sm"
+                                                formControlName="recibioProfilaxisAcordeGuias" uppercase>
+                                                <option value=null>Seleccione</option>
+                                                <option *ngFor="let item of listaRespuesta; let i = index" value="{{item.descripcionValor}}">
+                                                  {{item.descripcionValor}}
+                                                </option>
+                                              </select>
+                                            </div>
+                          
+                                            
+                                        </div>
+
+                                          
+                <div class="form-group">
+                  <label><b>Presencia de Infeccion Vaginal (requiere ovulos, documentado por medico o laboratorio)</b></label>
+                  <select #refIV ui-select2 class="form-control input-sm" formControlName="infeccionVaginal"
+                    uppercase (change)="getSelectedValueIV(refIV.value)">
+                    <option value=null>Seleccione</option>
+                    <option *ngFor="let item of listaRespuestaSexado; let i = index" value="{{item.descripcionValor}}">
+                      {{item.descripcionValor}}
+                    </option>
+                  </select>
+                </div>
+
+                <div *ngIf="elementIV == true" style="background-color: #FAE9EF;">
+                  <div class="form-group">
+                    <label><b>Numero de infeccion vaginal por año</b></label>
+                    <input type="text" class="form-control" formControlName="nroInfeccionVaginalAnual" name="nroInfeccionVaginalAnual"
+                      placeholder="....">
+                  </div>
+              </div>
+                            
+                            
+                                            <div class="form-group">
+                                              <label><b>Antecedentes de IVU</b></label>
+                                              <select  #refSIA ui-select2 class="form-control input-sm"
+                                                formControlName="factoresRiesgoAntecedentesIvu" uppercase (change)="getSelectedAntecedentes(refSIA.value)" >
+                                                <option value=null>Seleccione</option>
+                                                <option *ngFor="let item of listaRespuesta; let i = index" value="{{item.descripcionValor}}">
+                                                  {{item.descripcionValor}}
+                                                </option>
+                                              </select>
+                                            </div>
+
+                                            <div *ngIf="elementSIAntecedentes == true" style="background-color: #FAE9EF;">
+                    
+<div class="form-group">
+                    <label><b>Resultado laboratorio- Germen</b></label>
+                    <input type="text" class="form-control" formControlName="germenSiAntecedentes" name="germenSiAntecedentes"
+                      placeholder="Escriba aqui...">
+                  </div>
+                  </div>
+                            
+                            
+                                            <div class="form-group">
+                                              <label><b>Realizó antibioticoterapia desde la última visita?</b></label>
+                                              <select #refANTB  ui-select2 class="form-control input-sm"
+                                                formControlName="factoresRiesgoAntibioticoterapiaUltimaVisita" uppercase (change)="getSelectedValueANTB(refANTB.value)" >
+                                                <option value=null>Seleccione</option>
+                                                <option *ngFor="let item of listaRespuesta; let i = index" value="{{item.descripcionValor}}">
+                                                  {{item.descripcionValor}}
+                                                </option>
+                                              </select>
+                                            </div>
+                          
+                                            <div *ngIf="elementANTB == true" style="background-color: #FAE9EF;">
+                                              <div class="form-group">
+                                                <label><b>Especificar...</b></label>
+                                                <input type="text" class="form-control" formControlName="antibioticoterapiaUltimaVisitaEspecificar" name="antibioticoterapiaUltimaVisitaEspecificar"
+                                                  placeholder="....">
+                                              </div>
+                                          </div>
+                            
+                                            <div class="form-group">
+                                              <label><b>Embarazo Actual</b></label>
+                                              <select ui-select2 class="form-control input-sm" formControlName="factoresRiesgoEmbarazo" uppercase>
+                                                <option value=null>Seleccione</option>
+                                                <option *ngFor="let item of listaRespuestaSexado; let i = index" value="{{item.descripcionValor}}">
+                                                  {{item.descripcionValor}}
+                                                </option>
+                                              </select>
+                                            </div>
+                          
+                                           
+                          
+                                            <div class="form-group">
+                                              <label><b>Litiasis Renoureteral</b></label>
+                                              <select  ui-select2 class="form-control input-sm" formControlName="factoresRiesgoLitiasisRenal"  
+                                                uppercase>
+                                                <option value=null>Seleccione</option>
+                                                <option *ngFor="let item of listaRespuesta; let i = index" value="{{item.descripcionValor}}">
+                                                  {{item.descripcionValor}}
+                                                </option>
+                                              </select>
+                                            </div>
+                          
+                                            <div class="form-group">
+                                              <label><b>Enfermedad renal crónica</b></label>
+                                              <select ui-select2 class="form-control input-sm" formControlName="factoresRiesgoEnfermedadRenalCronica"  
+                                                uppercase>
+                                                <option value=null>Seleccione</option>
+                                                <option *ngFor="let item of listaRespuesta; let i = index" value="{{item.descripcionValor}}">
+                                                  {{item.descripcionValor}}
+                                                </option>
+                                              </select>
+                                            </div>
+                          
+                                            <div class="form-group">
+                                              <label><b>Hiperplasia prostática benigna</b></label>
+                                              <select  ui-select2 class="form-control input-sm" formControlName="factoresRiesgoHiperplasiaProstaticaBenigna" 
+                                                uppercase>
+                                                <option value=null>Seleccione</option>
+                                                <option *ngFor="let item of listaRespuestaSexado; let i = index" value="{{item.descripcionValor}}">
+                                                  {{item.descripcionValor}}
+                                                </option>
+                                              </select>
+                                            </div>
+                                          
+                          
+                                          <div class="form-group">
+                                            <label><b>Diabetes</b></label>
+                                            <select ui-select2 class="form-control input-sm" formControlName="factoresRiesgoDiabetes"  
+                                              uppercase>
+                                              <option value=null>Seleccione</option>
+                                              <option *ngFor="let item of listaRespuesta; let i = index" value="{{item.descripcionValor}}">
+                                                {{item.descripcionValor}}
+                                              </option>
+                                            </select>
+                                          </div>
+                                      
+                          
+                                        <div class="form-group">
+                                          <label><b>Anomalías anatómicas del tracto urinario</b></label>
+                                          <select #refATU ui-select2 class="form-control input-sm" formControlName="factoresRiesgoAnomaliasAnatomicasTractoUrinario"  (change)="getSelectedValueATU(refATU.value)"
+                                            uppercase>
+                                            <option value=null>Seleccione</option>
+                                            <option *ngFor="let item of listaRespuesta; let i = index" value="{{item.descripcionValor}}">
+                                              {{item.descripcionValor}}
+                                            </option>
+                                          </select>
+                                        </div>
+                                        <div *ngIf="elementATU == true" style="background-color: #FAE9EF;">
+                                  
+                          
+                                          <div class="form-group">
+                                            <label><b>Especificar...</b></label>
+                                            <input type="text" class="form-control" formControlName="factoresRiesgoAnomaliasAnatomicasTractoEspecificar" name="factoresRiesgoAnomaliasAnatomicasTractoEspecificar"
+                                              placeholder="....">
+                                          </div>
+                                          </div>
+                          
+                                            
+                          
+                                        
+                          
+                                
+                          
+                                            <div class="form-group">
+                                              <label><b>Corticoides</b></label>
+                                              <select ui-select2 class="form-control input-sm" formControlName="factoresRiesgoCorticoides"  
+                                                uppercase>
+                                                <option value=null>Seleccione</option>
+                                                <option *ngFor="let item of listaRespuesta; let i = index" value="{{item.descripcionValor}}">
+                                                  {{item.descripcionValor}}
+                                                </option>
+                                              </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                              <label><b>Cáncer</b></label>
+                                              <select ui-select2 class="form-control input-sm" formControlName="factoresRiesgoCancer"
+                                                uppercase>
+                                                <option value=null>Seleccione</option>
+                                                <option *ngFor="let item of listaRespuesta; let i = index" value="{{item.descripcionValor}}">
+                                                  {{item.descripcionValor}}
+                                                </option>
+                                              </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                              <label><b>Otras causas de inmunodepresión</b></label>
+                                              <select #refOI ui-select2 class="form-control input-sm" formControlName="factoresRiesgoOtrasCausasInmunodepresion"
+                                                uppercase (change)="getSelectedValueOI(refOI.value)">
+                                                <option value=null>Seleccione</option>
+                                                <option *ngFor="let item of listaRespuesta; let i = index" value="{{item.descripcionValor}}">
+                                                  {{item.descripcionValor}}
+                                                </option>
+                                              </select>
+                                            </div>
+                          
+                                            <div *ngIf="elementOI == true" style="background-color: #FAE9EF;">
+                                              <div class="form-group">
+                                                <label><b>Especificar...</b></label>
+                                                <input type="text" class="form-control" formControlName="otrasCausasInmunodepresionEspecificar" name="otrasCausasInmunodepresionEspecificar"
+                                                  placeholder="....">
+                                              </div>
+                                          </div>
+                          
+                                          </div>
+                          
+                                        </div>
+                          
+                                        <br/>
+                            
+                                              <div class="form-group">
+                                                <label><b>Otros factores de Riesgo</b></label>
+                                                <input type="text" class="form-control" formControlName="otrosFactoresRiesgo" name="otrosFactoresRiesgo"
+                                                  placeholder="Otros...">
+                                              </div>
+
+                                           
+                                        
+                                    
+                                        
+
+                                       
+
+                                       
+
+                                            
+
+                   
+
+
+                          </div>
+
+                        </div>
+
+
+                        <div class="row justify-content-center">
+                          <div class="col-lg-10">
+
+                            <div class="card" style="background-color: #D2BCDE;">
+                              <div class="card-body">
+                                <div class="form-group">
+                                  <label><b>Tipo de Individuo</b></label>
+                                  <select #referencia ui-select2 class="form-control input-sm"
+                                      formControlName="tipoIndividuo" uppercase
+                                      (change)="getSelectedValueTI(referencia.value)">
+                                      <option value=null>Seleccione</option>
+                                      <option *ngFor="let item of listaTipoIndividuo; let i = index" value="{{item.descripcionValor}}">
+                                          {{item.descripcionValor}}
+                                        </option>
+                                  </select>
+                              </div>
+
+                              <div *ngIf="elementTI == true" style="background-color: #FAE9EF;">
+
+                                <div class="form-group">
+                                  <label><b>Tiempo de evolucion del LES, desde el diagnostico hasta la fecha en meses </b></label>
+                                  <input type="number" min="0" max="240" class="form-control" formControlName="tiempoEvolucionLes" name="tiempoEvolucionLes"
+                                    placeholder="...">
+                                </div>
+
+                                  <div class="form-group">
+                                      <label><b>Tratamiento con Glucorticoides</b></label>
+                                      <select #refG ui-select2 class="form-control input-sm"
+                                          formControlName="tratamientoGlucocorticoides" uppercase (change)="getSelectedValueG(refG.value)">
+                                          <option value=null>Seleccione</option>
+                                          <option *ngFor="let item of listaRespuesta; let i = index"
+                                              value="{{item.descripcionValor}}">
+                                              {{item.descripcionValor}}
+                                          </option>
+                                      </select>
+                                  </div>
+                              
+
+                              <div *ngIf="elementG == true" style="background-color: #FAE9EF;">
+
+                                <div class="form-group">
+                                    <label><b>Indique la dosis diaria (cantidad de mg)</b></label>
+                                    <input type="text" class="form-control"
+                                        formControlName="dosisDiariaCantidadMg" name="dosisDiariaCantidadMg"
+                                        placeholder="...">
+                                </div>
+                                <div class="form-group">
+                                    <label><b>Indique la dosis acumulada desde la ultima visita(dosis diaria
+                                            x nro
+                                            de
+                                            dias) </b></label>
+                                    <input type="text" class="form-control"
+                                        formControlName="dosisAcumuladaUltimaVisita"
+                                        name="dosisAcumuladaUltimaVisita" placeholder="...">
+                                </div>
+                              </div>
+                                <div class="form-group">
+                                    <label><b>Realizó tratamiento con inmunosupresores (IS)</b></label>
+                                    <select #refIS ui-select2 class="form-control input-sm"
+                                        formControlName="tratamientoInmunosupresoresIs" uppercase (change)="getSelectedValueIS(refIS.value)">
+                                        <option value=null>Seleccione</option>
+                                        <option *ngFor="let item of listaRespuesta; let i = index"
+                                            value="{{item.descripcionValor}}">
+                                            {{item.descripcionValor}}
+                                        </option>
+                                    </select>
+                                </div>
+                           
+
+                            <div *ngIf="elementIS == true" style="background-color: #FAE9EF;">
+                              <div class="form-group">
+                                  <label><b>Si la respuesta fue si, marque que Tipo de IS</b></label>
+                                  <div *ngFor="let ck of checkboxesDataList">
+                                      <label>
+                                        <input  #refIS  type="checkbox" [value]="ck.label" [checked] = ck.isChecked (change)="changeSelection(refIS.value,$event.target.checked)"/>
+                                        {{ck.label}}
+                                      </label>
+                                  </div>
+
+                              </div>
+
+                              <div class="form-group">
+                                  <label><b>En caso de tener otro Tipo de IS, escriba aqui</b></label>
+                                  <input type="text" class="form-control" formControlName="otroTipoIs" name="otroTipoIs" placeholder="...">
+                                </div>
+
+                              <div class="form-group">
+                                  <label><b>Dosis: Añada el farmaco justo a la dosis administrada por dia
+                                          en (mg).
+                                          Ejemplo: Micofenolato (1500)</b></label>
+                                  <input type="text" class="form-control" formControlName="dosis"
+                                      name="dosis" placeholder="...">
+                              </div>
+                            </div>
+                              <div class="form-group">
+                                  <label><b>Presenta manifestacion renal?</b></label>
+                                  <select #refR ui-select2 class="form-control input-sm" formControlName="presentaManifestacionRenal"
+                                    uppercase (change)="getSelectedValueR(refR.value)">
+                                    <option value=null>Seleccione</option>
+                                    <option *ngFor="let item of listaRespuesta; let i = index" value="{{item.descripcionValor}}">
+                                      {{item.descripcionValor}}
+                                    </option>
+                                  </select>
+                                </div>
+                
+                                <div *ngIf="elementR== true" style="background-color: #FAE9EF;"> 
+                                  <div class="form-group">
+                                    <label><b>Actividad de afectación renal</b></label>
+                                    <select ui-select2 class="form-control input-sm" formControlName="estadoEncuentra" uppercase>
+                                      <option value=null>Seleccione</option>
+                                      <option *ngFor="let item of listaEstadoRenal; let i = index" value="{{item.descripcionValor}}">
+                                        {{item.descripcionValor}}
+                                      </option>
+                                    </select>
+                                  </div>
+            
+                                </div>
+
+                                <div class="form-group">
+                                  <label><b>antiDNA positivo</b></label>
+                                  <select ui-select2 class="form-control input-sm" formControlName="antiDNAPositivo"
+                                    uppercase>
+                                    <option value=null>Seleccione</option>
+                                    <option *ngFor="let item of listaRespuesta; let i = index" value="{{item.descripcionValor}}" >
+                                      {{item.descripcionValor}}
+                                    </option>
+                                  </select>
+                                </div>
+        
+                                <div class="form-group">
+                                  <label><b>Complementos bajos</b></label>
+                                  <select ui-select2 class="form-control input-sm" formControlName="complementosBajos"
+                                    uppercase>
+                                    <option value=null>Seleccione</option>
+                                    <option *ngFor="let item of listaRespuesta; let i = index" value="{{item.descripcionValor}}" >
+                                      {{item.descripcionValor}}
+                                    </option>
+                                  </select>
+                                </div>
+        
+
+                                <div class="form-group">
+                                  <label><b>Síndrome de Sjögren secundario</b></label>
+                                  <select ui-select2 class="form-control input-sm" formControlName="factoresRiesgoSindromeSjogren"
+                                    uppercase>
+                                    <option value=null>Seleccione</option>
+                                    <option *ngFor="let item of listaRespuesta; let i = index" value="{{item.descripcionValor}}" >
+                                      {{item.descripcionValor}}
+                                    </option>
+                                  </select>
+                                </div>
+
+                                <div class="form-group">
+                                  <label><b>Leucopenia</b></label>
+                                  <select #refL ui-select2 class="form-control input-sm" formControlName="factoresRiesgoLeucopenia"  (change)="getSelectedValueL(refL.value)"
+                                    uppercase>
+                                    <option value=null>Seleccione</option>
+                                    <option *ngFor="let item of listaRespuesta; let i = index" value="{{item.descripcionValor}}">
+                                      {{item.descripcionValor}}
+                                    </option>
+                                  </select>
+                                </div>
+
+                                <div *ngIf="elementL == true" style="background-color: #FAE9EF;">
+                                  <div class="row">
+                                    <div class="col">
+                
+                                    </div>
+                                    
+                                    <div class="col bg-light">
+                                      <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" formControlName="factoresRiesgoTipoLeucopenia"   id="inlineCheckbox1" value="Linfopenia"  >
+                                        <label class="form-check-label" for="inlineCheckbox1">Linfopenia</label>
+                                      </div> 
+                                     
+                                    <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="radio" formControlName="factoresRiesgoTipoLeucopenia"   id="inlineCheckbox1" value="Neutropenia"  >
+                                      <label class="form-check-label" for="inlineCheckbox1">Neutropenia</label>
+                                      </div> 
+                
+                                      <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" formControlName="factoresRiesgoTipoLeucopenia"   id="inlineCheckbox1" value="Ambos"  >
+                                        <label class="form-check-label" for="inlineCheckbox1">Ambos</label>
+                                        </div>   
+                    
+                                    
+                                    </div>
+                                    
+                                    </div>
+                                
+                                  </div>
+
+                               
+
+                                <div class="form-group">
+                                  <label><b>SLEDAI (puntos de 0 a 30)</b></label>
+                                  <input type="number" min="0" max="30" class="form-control" formControlName="sledaiPuntos0A30" name="sledaiPuntos0A30"
+                                    placeholder="...">
+                
+                                </div>
+                              </div>
+                         
+                            
+                              </div>
+                            
+                            </div>
+
+                          </div>
+                        </div>
+
+                       
+
+
+
+
+
+
+                        <br />
+                        <div class="card"  style="background-color: #fc805b ;">
+                          <div class="card-body">
+                            <div class="form-group">
+                              <label><b>Fecha de Ingreso-(Formato dia/mes/año)</b></label>
+                              <input type="date" class="form-control" 
+                                  formControlName="fechaIngreso" name="fechaIngreso"
+                                  placeholder="...">
+                        
+                          </div>
+                          </div>
+                        </div>
+                        <div class="card">
+                          <div class="card-body">
+                            <div class="form-group">
+                              <label><b>Encargado de registro (Nombre y Apellido de quien cargo) </b></label>
+                              <input type="text" class="form-control"
+                                  formControlName="firmaEncargado"
+                                  name="firmaEncargado" placeholder="..." [class.is-invalid]="firmaEncargadoNoValido">
+                                  <small *ngIf="firmaEncargadoNoValido" class="text-danger">
+                                    Ingrese firma
+                                  </small>
+                            </div>
+          
+                          </div>
+          
+                         </div>
+                        <!--Personas Fechas-->
+                        <div class="form-row justify-content-center" [hidden]="crear" style="display: none;">
+                            <div class="col-lg-5">
+                                <label><b>Fecha creaci&oacute;n</b></label>
+                                <input type="datetime-local" class="form-control" formControlName="fechaCreacion"
+                                    name="fechaCreacion" placeholder="Fecha creaci&oacute;n">
+
+                                <label><b>Fecha modificaci&oacute;n</b></label>
+                                <input type="datetime-local" class="form-control" formControlName="fechaModificacion"
+                                    name="fechaModificacion" placeholder="Fecha modificaci&oacute;n">
+                            </div>
+                            <div class="col-lg-5">
+                                <label><b>Usuario creaci&oacute;n</b></label>
+                                <input type="text" class="form-control" formControlName="usuarioCreacion"
+                                    name="usuarioCreacion" placeholder="Usuario creaci&oacute;n">
+
+                                <label><b>Usuario modificaci&oacute;n</b></label>
+                                <input type="text" class="form-control" formControlName="usuarioModificacion"
+                                    name="usuarioModificacion" placeholder="Usuario modificaci&oacute;n">
+                            </div>
+                            <div class="form-group">
+                                <label><b>PersonaID</b></label>
+                                <input type="text" class="form-control" formControlName="personas" name="personas"
+                                  placeholder="...">
+                
+                              </div>
+                        </div>
+                        <hr>
+                        <br>
+                        <div *ngIf="alertGuardar" class="alert alert-danger alert-dismissible fade show text-center"
+                            role="alert">
+                            Existen campos obligatorios. Verifique.
+                            <button type="button" (click)="cerrarAlertGuardar()" class="close" data-dismiss="alert"
+                                aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-primary ">
+                                <i class="fa fa-save"></i>
+                                Guardar
+                            </button>
+                            &nbsp;&nbsp;
+                            <button (click)="limpiar($event)" [hidden]="!crear" class="btn btn-warning"><i
+                                    class="fas fa-backspace"></i> Limpiar</button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

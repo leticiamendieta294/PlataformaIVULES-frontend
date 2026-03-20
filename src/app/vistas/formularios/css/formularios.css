@@ -1,0 +1,35 @@
+body {
+    font:400 16px/1.8 sans-serif;
+}
+.cols {
+  display: flex;
+}
+
+.cols div {
+  flex: 1;
+}
+
+
+/*estilos para la tabla*/
+  table th {
+    background-color: #337ab7 !important;
+    color: white;
+  }
+
+  table>tbody>tr>td {
+    vertical-align: middle !important;
+  }
+
+  /*para alinear los botones y cuadro de busqueda*/
+  .btn-group, .btn-group-vertical {
+    position: absolute !important;
+  }
+
+  .profile-img img{
+    height: 150px;
+ }
+ 
+ .profile-img{
+    padding: 5px !important;
+    background-color: #337ab7 !important;
+ }

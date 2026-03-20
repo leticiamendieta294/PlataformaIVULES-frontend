@@ -1,0 +1,76 @@
+<head>
+    <link rel="stylesheet" href="opcionesclinica.component.css">
+</head>
+
+<body>
+    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+        <li class="breadcrumb-item"><a href="/">Listado de pacientes</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Opciones </li>
+    </ol>
+</nav>
+    
+
+    <div class="row animated fadeIn faster">
+        <div class="col">
+            <div class="card">
+                
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col"><p class="text-right">Clinica</p></div>
+                        <div class="col">
+                            
+                            <div class="btn-toolbar d-flex flex-column align-items-start" role="toolbar" aria-label="Toolbar with button groups">
+                                <div class="btn-group mr-2" role="group" aria-label="First group"> 
+                                    <li *ngFor="let op of opciones; index as i" style="list-style: none;">
+                                        <button type="button" class="btn border border-dark"  [ngClass]="{ yellowClass: op=='no', redClass: op=='vacio', greenClass: op=='si'}" (click)="i == 0 ? cuestionariobasal($event) :seguimiento($event,i) ">{{i}}</button>  
+                                      </li>
+                                </div>
+                        
+                            </div>
+                        </div>
+                        <div class="col"><p class="text-right">Laboratorio</p></div>
+                        <div class="col-lg-5">
+                            
+                            <div class="btn-toolbar d-flex flex-column align-items-start" role="toolbar" aria-label="Toolbar with button groups">
+                                <div class="btn-group mr-2" role="group" aria-label="First group"> 
+                                    <li *ngFor="let op of opcionesLaboratorio; index as i" style="list-style: none;">
+                                        <button type="button" class="btn border border-dark"  [ngClass]="{ yellowClass: op=='no', redClass: op=='vacio', greenClass: op=='si'}" (click)="laboratorio($event,i) ">{{i}}</button>  
+                                      </li>
+                                </div>
+                        
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <div class="row">
+
+                       
+
+                        
+
+                       
+                        
+                    </div>
+                  
+                   
+            </div>
+        </div>
+    </div>
+    </div>
+    <div *ngIf="urocultivoPositivo == true" >
+
+        <div class="alert alert-danger" role="alert">
+            Urocultivo Positivo en los siguientes Laboratorios:
+            <ul>
+                <li *ngFor="let op of opcionesLaboratorioUP; index as i" style="list-style: none;">
+                    {{op}}  
+                  </li>
+            </ul>
+          </div>
+    </div>
+    
+</body>

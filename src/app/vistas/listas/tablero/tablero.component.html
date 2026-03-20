@@ -1,0 +1,17 @@
+<br/>
+<div class="row justify-content-around align-items-center">
+  <h1 class="align-items-center">Cantidad de Registros por Cuestionario</h1>
+<div class="card-deck">
+
+
+    <div   *ngFor="let recipient of mapa | keyvalue" class="card border-primary mb-3" style="max-width: 9rem;">
+        <div class="card-header border-primary" style="background-color: #5271ff;"><h4 class="text-center" style="color: white;">{{recipient.key}}</h4></div>
+        <div class="card-body ">
+          <h1 class=" card-title text-center" style="color: black;"><strong>{{recipient.value}}</strong></h1>
+       
+
+        </div>
+      </div>
+      
+  </div>
+</div>

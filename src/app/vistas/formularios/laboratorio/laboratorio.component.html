@@ -1,0 +1,1907 @@
+<head>
+    <link rel="stylesheet" href="laboratorio.component.css">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+   
+    
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a  href="/">Inicio /</a>
+        </li>
+        <li class="nav-item">
+          <a href="inicio/personas"> Listado de pacientes /</a>
+        </li>
+        <li class="nav-item active" style="color: grey;">
+          Laboratorio
+        </li>
+      </ul>
+      <span class="navbar-text">
+        <button class="btn btn-secondary" (click)="opciones($event)">
+          <i class="fa fa-arrow-left"></i>
+          Regresar
+        </button>
+      </span>
+    </div>
+  </nav>
+
+ <div class="row animated fadeIn faster">
+        <div class="col">
+            <div class="card">
+                <div class="card-header text-center text-black" style="background-color: antiquewhite;font-weight: bold;">
+                  Laboratorio {{numeroLaboratorio}}
+                  <br>
+                  {{verPersona.codigo}}:{{verPersona.nombres}} {{verPersona.apellidos}}
+                </div>
+                <div class="card-body">
+
+                    <form [formGroup]="laboratorioForm" (ngSubmit)="guardar( )">
+                      
+                      <div class="card">
+                        <div class="card-header text-center ">
+                          Sedimentos Urinarios - Microscopio
+                        </div>
+                        <div class="card-body">
+                          <div class="d-none">
+                            <div class="col-lg-5">
+                                <div class="form-group" [hidden]="crear">
+                                    <label><b>Id</b></label>
+                                    <input type="number" class="form-control" placeholder="Id"
+                                        formControlName="idLaboratorio" name="id">
+                                    <small class="form-text text-muted">Este campo es autogenerado</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                          <div class="col-lg-5">
+                         
+                          <div class="form-group">
+                            <label><b>Leucocitos:
+                               </b></label>
+                            <input type="number" min="0" class="form-control"
+                                formControlName="leucocitos" name="leucocitos"
+                                placeholder="..."  aria-describedby="numerosAyudaEnlinea">
+                                <small id="numerosAyudaEnlinea" class="text-muted">
+                                 Solo valores numéricos.
+                                </small>    
+                        </div>
+
+                        
+
+                            <div class="form-group">
+                                <label><b>Esterasa Leucocitaria:</b></label>
+                                <select #ref ui-select2 class="form-control input-sm"
+                                    formControlName="esterasaLeucocitaria" uppercase
+                                    >
+                                    <option value=null>Seleccione</option>
+                                    <option *ngFor="let item of listaELeucocitaria; let i = index"
+                                        value="{{item.valor}}">
+                                        {{item.descripcionValor}}
+                                    </option>
+                                </select>
+                            </div>
+
+                            
+                                <div class="form-group">
+                                    <label><b>Hematíes:
+                                       </b></label>
+                                    <input type="number" min="0" class="form-control"
+                                        formControlName="hematies" name="hematies"
+                                        placeholder="..." aria-describedby="numerosAyudaEnlinea">
+                                        <small id="numerosAyudaEnlinea" class="text-muted">
+                                         Solo valores numéricos.
+                                        </small>    
+                                </div>
+
+
+                                    <div class="form-group">
+                                        <label><b>Células epiteliales planas:
+                                          </b></label>
+                                        <input type="number" min="0" class="form-control"
+                                            formControlName="celularidad" name="celularidad"
+                                            placeholder="..." aria-describedby="numerosAyudaEnlinea">
+                                            <small id="numerosAyudaEnlinea" class="text-muted">
+                                             Solo valores numéricos.
+                                            </small>    
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label><b>Células epiteliales redondas:
+                                        </b></label>
+                                      <input type="number" min="0" class="form-control"
+                                          formControlName="celularidadRedonda" name="celularidadRedonda"
+                                          placeholder="..." aria-describedby="numerosAyudaEnlinea">
+                                          <small id="numerosAyudaEnlinea" class="text-muted">
+                                           Solo valores numéricos.
+                                          </small>    
+                                  </div>
+
+                                    <div class="form-group">
+                                        <label><b>Cilindros</b></label>
+                                        <input type="text" class="form-control"
+                                        formControlName="cilindros" name="cilindros"
+                                        placeholder="..." >
+                                           
+                                  
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label><b>Cilindros Comentarios</b></label>
+                                      <input type="text" class="form-control"
+                                      formControlName="cilindrosComentarios" name="cilindrosComentarios"
+                                      placeholder="..." >
+                                         
+                                
+                                  </div>
+
+                                  <div class="form-group">
+                                    <label><b>Cristales</b></label>
+                                    <input type="text" class="form-control"
+                                    formControlName="cristales" name="cristales"
+                                    placeholder="..." >
+                                       
+                              
+                                </div>
+
+                                <div class="form-group">
+                                  <label><b>Cristales Comentarios</b></label>
+                                  <input type="text" class="form-control"
+                                  formControlName="cristalesComentarios" name="cristalesComentarios"
+                                  placeholder="..." >
+                                     
+                            
+                              </div>
+                         
+                                  </div>
+                                </div>
+                        </div>
+                      </div>
+                      <br/>
+
+                      <div class="card">
+                        <div class="card-header  text-center ">
+                          Tiras
+                        </div>
+                        <div class="card-body">
+                          <div class="row justify-content-center">
+                         <!--  <div class="col-lg-5">
+                              <img src="../assets/images/tiras_interpretacion.jpg" class="img-thumbnail" alt="..." width="350" height="600">
+  
+                            </div>--> 
+  
+                            <div class="col-lg-5">
+                              <div class="form-group">
+                                <label><b>LEUCOCITOS</b></label>
+                                <input type="number" min="0" class="form-control"
+                                    formControlName="tirasLEU" name="tirasLEU"
+                                    placeholder="..." aria-describedby="numerosAyudaEnlinea" [class.is-invalid]="tirasLEUNoValido" required>
+                                    <small *ngIf="tirasLEUNoValido" class="text-danger">
+                                     El valor debe ser numerico, minimo 0
+                                    </small>
+                                    <small id="numerosAyudaEnlinea" class="text-muted">
+                                      Solo valores numéricos.
+                                     </small>
+                                
+                            </div>
+
+                            <div class="form-group">
+                              <label><b>NITRITOS</b></label>
+                              <input type="number"   min="0" class="form-control"
+                                  formControlName="tirasNIT" name="tirasNIT"
+                                  placeholder="..." aria-describedby="numerosAyudaEnlinea" [class.is-invalid]="tirasNITNoValido" required>
+                                  <small *ngIf="tirasNITNoValido" class="text-danger">
+                                   El valor debe ser numerico, minimo 0
+                                  </small>
+                                  <small id="numerosAyudaEnlinea" class="text-muted">
+                                    Solo valores numéricos.
+                                   </small>   
+                          </div>
+                          <div class="form-group">
+                            <label><b>UROBILINOGENO</b></label>
+                            <input type="number"  min="0" class="form-control"
+                                formControlName="tirasURO" name="tirasURO"
+                                placeholder="..." aria-describedby="numerosAyudaEnlinea" [class.is-invalid]="tirasURONoValido" required>
+                                <small *ngIf="tirasURONoValido" class="text-danger">
+                                 El valor debe ser numerico, minimo 0
+                                </small>
+                                <small id="numerosAyudaEnlinea" class="text-muted">
+                                  Solo valores numéricos.
+                                 </small>   
+                        </div>
+
+                        <div class="form-group">
+                          <label><b>PROTEINAS</b></label>
+                          <input type="number" min="0" class="form-control"
+                              formControlName="tirasPRO" name="tirasPRO"
+                              placeholder="..." aria-describedby="numerosAyudaEnlinea" [class.is-invalid]="tirasPRONoValido" required>
+                              <small *ngIf="tirasPRONoValido" class="text-danger">
+                               El valor debe ser numerico, minimo 0
+                              </small>
+                              <small id="numerosAyudaEnlinea" class="text-muted">
+                                Solo valores numéricos.
+                               </small>   
+                      </div>
+
+                      <div class="form-group">
+                        <label><b>pH</b></label>
+                        <input type="number" class="form-control" min="5" max="9"
+                            formControlName="tiraspH" name="tiraspH"
+                            placeholder="..." aria-describedby="numerosAyudaEnlinea" [class.is-invalid]="tiraspHNoValido" required>
+                            <small *ngIf="tiraspHNoValido" class="text-danger">
+                             El valor debe ser numerico, minimo 5 maximo 9
+                            </small>
+                            <small id="numerosAyudaEnlinea" class="text-muted">
+                              Solo valores numéricos.
+                             </small>   
+                    </div>
+
+                    <div class="form-group">
+                      <label><b>SANGRE</b></label>
+                      <input type="number"  min="0" class="form-control"
+                          formControlName="tirasBLO" name="tirasBLO"
+                          placeholder="..." aria-describedby="numerosAyudaEnlinea" [class.is-invalid]="tirasBLONoValido" required>
+                          <small *ngIf="tirasBLONoValido" class="text-danger">
+                           El valor debe ser numerico, minimo 0
+                          </small>
+                          <small id="numerosAyudaEnlinea" class="text-muted">
+                            Solo valores numéricos.
+                           </small>   
+                  </div>
+
+
+                  <div class="form-group">
+                    <label><b>DENSIDAD</b></label>
+                    <input type="number" class="form-control" min="1000" max="1030"
+                        formControlName="tirasSG" name="tirasSG"
+                        placeholder="..." aria-describedby="numerosAyudaEnlinea"[class.is-invalid]="tirasSGNoValido" required>
+                        <small *ngIf="tirasSGNoValido" class="text-danger">
+                         El valor debe ser numerico, minimo 1000, maximo 1030
+                        </small>
+                        <small id="numerosAyudaEnlinea" class="text-muted">
+                          Solo valores numéricos.
+                         </small>   
+                </div>
+
+                <div class="form-group">
+                  <label><b>CUERPOS CETONICOS</b></label>
+                  <input type="number"  min="0" class="form-control"
+                      formControlName="tirasKET" name="tirasKET"
+                      placeholder="..." aria-describedby="numerosAyudaEnlinea" [class.is-invalid]="tirasKETNoValido" required>
+                      <small *ngIf="tirasKETNoValido" class="text-danger">
+                       El valor debe ser numerico, minimo 0
+                      </small>
+                      <small id="numerosAyudaEnlinea" class="text-muted">
+                        Solo valores numéricos.
+                       </small>   
+              </div>
+
+              <div class="form-group">
+                <label><b>BILIRRUBINA</b></label>
+                <input type="number"  min="0" class="form-control"
+                    formControlName="tirasBIL" name="tirasBIL"
+                    placeholder="..." aria-describedby="numerosAyudaEnlinea" [class.is-invalid]="tirasBILNoValido" required>
+                    <small *ngIf="tirasBILNoValido" class="text-danger">
+                     El valor debe ser numerico, minimo 0
+                    </small>
+                    <small id="numerosAyudaEnlinea" class="text-muted">
+                      Solo valores numéricos.
+                     </small>   
+            </div>
+            <div class="form-group">
+              <label><b>GLUCOSA</b></label>
+              <input type="number"  min="0" class="form-control"
+                  formControlName="tirasGLU" name="tirasGLU"
+                  placeholder="..." aria-describedby="numerosAyudaEnlinea"[class.is-invalid]="tirasGLUNoValido" required>
+                  <small *ngIf="tirasGLUNoValido" class="text-danger">
+                   El valor debe ser numerico, minimo 0
+                  </small>
+                  <small id="numerosAyudaEnlinea" class="text-muted">
+                    Solo valores numéricos.
+                   </small>   
+          </div>
+
+                        
+  
+                            </div>
+                            
+                          </div>
+                         
+                        </div>
+                      </div>
+<br/>
+                      <div class="card">
+                        <div class="card-header text-center">
+                          Urocultivo
+                        </div>
+                        <div class="card-body">
+                          <div class="row justify-content-center">
+                            <div class="col-lg-9">
+
+                              <div class="form-group">
+                                <label><b>Urocultivo</b></label>
+                                <select #refR ui-select2 class="form-control input-sm" formControlName="urocultivo"
+                                  uppercase (change)="getSelectedValueR(refR.value)">
+                                  <option value=null>Seleccione</option>
+                                  <option *ngFor="let item of listaRespuestaUP; let i = index" value="{{item.descripcionValor}}">
+                                    {{item.descripcionValor}}
+                                  </option>
+                                </select>
+                              </div>
+
+<div *ngIf="element == true" >
+  <div class="form-group">
+    <label><b>Tipo de microorganismo</b></label>
+    <select #refG ui-select2 class="form-control input-sm"
+        formControlName="tipoMicrobio" uppercase (change)="getSelectedValueG(refG.value)">
+        <option value=null>Seleccione</option>
+        <option *ngFor="let item of listaTipoMicrobio; let i = index"
+            value="{{item.valor}}">
+            {{item.descripcionValor}}
+        </option>
+    </select>
+  </div>
+
+
+
+
+  
+  
+</div>
+
+<div *ngIf="elementCandida == true" >
+  <div class="form-group">
+    <label><b>Hongo Aislado</b></label>
+    <input type="text" class="form-control" formControlName="otroHongoAislado" name="otroHongoAislado" placeholder="...">
+  </div>
+
+
+  <div class="form-group">
+    <label><b>Recuento de Colonias (Comentarios) </b></label>
+    <input type="text" class="form-control" formControlName="recuentoColoniasNroComentario" name="recuentoColoniasNroComentario" placeholder="...">
+  </div>
+
+  <div class="card">
+    <div class="card-header text-center">
+      Antifungigrama
+    </div>
+    <div class="card-body">
+      <p> <mark>S</mark>- Sensible <mark>I</mark>- Intermedio <mark>R</mark>- Resistente</p>
+      
+<div class="row">
+<div class="col">
+<label for="Fluconazol"> Fluconazol</label>
+</div>
+
+<div class="col bg-light">
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" formControlName="antifungigramaFluconazol"   id="inlineCheckbox1" value="Sensible"  >
+    <label class="form-check-label" for="inlineCheckbox1">S</label>
+  </div> 
+ 
+<div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio"  formControlName ="antifungigramaFluconazol" id="inlineCheckbox2" value="Intermedio" >
+    <label class="form-check-label" for="inlineCheckbox2">I</label>
+  </div> 
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio"  formControlName ="antifungigramaFluconazol"  id="inlineCheckbox3" value="Resistente" >
+    <label class="form-check-label" for="inlineCheckbox3">R</label>
+  </div>
+  <button (click)="setCheck($event,'antifungigramaFluconazol')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+ 
+</div>
+
+
+
+
+
+</div>
+
+<div class="row">
+<div class="col">
+<label for="Anfotericina B"> Anfotericina B</label>
+</div>
+
+<div class="col bg-light">
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" formControlName ="antifungigramaAnfotericinaB" id="inlineCheckbox1" value="Sensible"  >
+    <label class="form-check-label" for="inlineCheckbox1">S</label>
+  </div> 
+ 
+<div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" formControlName ="antifungigramaAnfotericinaB" id="inlineCheckbox2" value="Intermedio" >
+    <label class="form-check-label" for="inlineCheckbox2">I</label>
+  </div> 
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" id="inlineCheckbox3"  formControlName ="antifungigramaAnfotericinaB" value="Resistente" >
+    <label class="form-check-label" for="inlineCheckbox3">R</label>
+  </div>
+  <button (click)="setCheck($event,'antifungigramaAnfotericinaB')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+
+</div>
+
+
+
+</div>
+
+<div class="row">
+<div class="col">
+<label for="Voriconazol"> Voriconazol</label>
+</div>
+
+<div class="col bg-light">
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" formControlName ="antifungigramaVoriconazol" id="inlineCheckbox1" value="Sensible"  >
+    <label class="form-check-label" for="inlineCheckbox1">S</label>
+  </div> 
+ 
+<div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" formControlName ="antifungigramaVoriconazol" id="inlineCheckbox2" value="Intermedio" >
+    <label class="form-check-label" for="inlineCheckbox2">I</label>
+  </div> 
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" formControlName ="antifungigramaVoriconazol" id="inlineCheckbox3" value="Resistente" >
+    <label class="form-check-label" for="inlineCheckbox3">R</label>
+  </div>
+  <button (click)="setCheck($event,'antifungigramaVoriconazol')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+
+</div>
+
+
+
+
+</div>
+
+
+
+<div class="row">
+<div class="col">
+<label for="Micafungina"> Micafungina</label>
+</div>
+
+<div class="col bg-light">
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" formControlName ="antifungigramaMicafungina" id="inlineCheckbox1" value="Sensible"  >
+    <label class="form-check-label" for="inlineCheckbox1">S</label>
+  </div> 
+ 
+<div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" formControlName ="antifungigramaMicafungina" id="inlineCheckbox2" value="Intermedio" >
+    <label class="form-check-label" for="inlineCheckbox2">I</label>
+  </div> 
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" formControlName ="antifungigramaMicafungina" id="inlineCheckbox3" value="Resistente" >
+    <label class="form-check-label" for="inlineCheckbox3">R</label>
+  </div>
+  <button (click)="setCheck($event,'antifungigramaMicafungina')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+</div>
+
+
+
+</div>
+
+<div class="row">
+<div class="col bg-light">
+<label for="Caspofungina"> Caspofungina</label>
+</div>
+
+<div class="col">
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" formControlName ="antifungigramaCaspofungina" id="inlineCheckbox1" value="Sensible" >
+    <label class="form-check-label" for="inlineCheckbox1">S</label>
+  </div> 
+ 
+<div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" formControlName ="antifungigramaCaspofungina" id="inlineCheckbox2" value="Intermedio" >
+    <label class="form-check-label" for="inlineCheckbox2">I</label>
+  </div> 
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" formControlName ="antifungigramaCaspofungina" id="inlineCheckbox3" value="Resistente" >
+    <label class="form-check-label" for="inlineCheckbox3">R</label>
+  </div>
+  <button (click)="setCheck($event,'antifungigramaCaspofungina')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+
+</div>
+
+
+
+
+</div>
+
+
+
+<div class="row">
+<div class="col">
+<label for="Flucitosina"> Flucitosina</label>
+</div>
+
+<div class="col">
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" formControlName ="antifungigramaFlucitosina" id="inlineCheckbox1" value="Sensible"  >
+    <label class="form-check-label" for="inlineCheckbox1">S</label>
+  </div> 
+ 
+<div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" formControlName ="antifungigramaFlucitosina" id="inlineCheckbox2" value="Intermedio" >
+    <label class="form-check-label" for="inlineCheckbox2">I</label>
+  </div> 
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" formControlName ="antifungigramaFlucitosina" id="inlineCheckbox3" value="Resistente" >
+    <label class="form-check-label" for="inlineCheckbox3">R</label>
+  </div>
+  <button (click)="setCheck($event,'antifungigramaFlucitosina')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+
+</div>
+
+
+
+</div>
+     
+      
+    </div>
+  </div>
+
+
+</div>
+
+<div *ngIf="elementG == true" >
+  <div class="form-group">
+    <label><b>Tipo de bacteria</b></label>
+    <select #refB ui-select2 class="form-control input-sm"
+        formControlName="tipoBacteria" uppercase (change)="getSelectedValueB(refB.value)">
+        <option value=null>Seleccione</option>
+        <option *ngFor="let item of listaTipoBacteria; let i = index"
+            value="{{item.valor}}">
+            {{item.descripcionValor}}
+        </option>
+    </select>
+  </div>
+
+  
+
+
+
+</div>
+
+
+<div *ngIf="elementB == true">
+
+
+  <div class="form-group">
+    <label><b>Marque que germen fue aislado</b></label>
+    <div *ngFor="let ck of bacteriasDataList">
+        <label>
+          <input  #refIS  type="checkbox" [value]="ck.label" [checked] = ck.isChecked (click)="changeBacteriasSelection(refIS.value,$event.target.checked)"  />
+          {{ck.label}}
+   
+          <input type="text"  name="recuentoColoniasNro" [value]="ck.recuentoColoniasNro" id="ck.label" placeholder="Recuento de colonias" (change)="changeBacteriasInputSelection(refIS.value,$event.target.value)" />
+        
+
+        
+          <input type="text" name="recuentoColoniasUM" [value]="ck.recuentoColoniasUM" id="ck.label" placeholder="Unidad de medida" disabled/>
+              
+        
+         
+        </label>
+      </div>
+
+</div>
+<div class="form-group">
+    <label><b>En caso de tener otro Germen, escriba aqui</b></label>
+    <input type="text" class="form-control" formControlName="otroGermenAislado" name="otroGermenAislado" placeholder="...">
+  </div>
+
+  <div class="form-group">
+    <label><b>BLEE</b></label>
+    <select ui-select2 class="form-control input-sm"
+        formControlName="blee" uppercase>
+        <option value=null>Seleccione</option>
+        <option *ngFor="let item of listaRespuesta; let i = index" value="{{item.descripcionValor}}">
+          {{item.descripcionValor}}
+        </option>
+    </select>
+</div>
+
+  <div class="card">
+    <div class="card-header">
+     Antibiograma Bacilo
+    </div>
+    <div class="card-body">
+      <p> <mark>S</mark>- Sensible <mark>I</mark>- Intermedio <mark>R</mark>- Resistente</p>
+
+      <div class="form-group">
+                                                
+        <div class="row">
+            <div class="col">
+                <label><b>Ampicilina Sulbactam</b></label>
+            </div>
+            <div class="col bg-light">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoAmpicilinaSulbactam" id="inlineRadio1" value="sensible" >
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoAmpicilinaSulbactam" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoAmpicilinaSulbactam" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+
+          <button (click)="setCheck($event,'antibiogramaBaciloGramNegativoAmpicilinaSulbactam')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+          
+           
+          
+          
+         
+         
+         
+        </div>
+       
+        </div>
+    </div>
+
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>Cefazolina</b></label>
+            </div>
+            <div class="col bg-light"> 
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoCefazolin" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1"> S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoCefazolin" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2"> I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoCefazolin" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaBaciloGramNegativoCefazolin')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>Cefalotina</b></label>
+            </div>
+            <div class="col bg-light">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoCefalotina" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1"> S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoCefalotina" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoCefalotina" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaBaciloGramNegativoCefalotina')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div>
+        </div>
+    </div>
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>Ceftriaxona</b></label>
+            </div>
+<div class="col bg-light">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoCeftriaxona" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoCeftriaxona" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoCeftriaxona" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaBaciloGramNegativoCeftriaxona')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>Ceftazidima</b></label>
+            </div>
+            <div class="col">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoCeftazidimaavibactam" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoCeftazidimaavibactam" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoCeftazidimaavibactam" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaBaciloGramNegativoCeftazidimaavibactam')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div>
+        </div>
+    </div>
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col bg-light">
+                <label><b>Cefepima</b></label>
+            </div>
+            <div class="col">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoCefepima" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoCefepima" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoCefepima" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaBaciloGramNegativoCefepima')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>Ertapenem</b></label>
+            </div>
+            <div class="col bg-light">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoErtapenem" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoErtapenem" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoErtapenem" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaBaciloGramNegativoErtapenem')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>Meropenem</b></label>
+            </div>
+            <div class="col">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoMeropenem" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoMeropenem" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoMeropenem" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaBaciloGramNegativoMeropenem')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>Amicacina</b></label>
+            </div>
+            <div class="col bg-light">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoAmikacina" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoAmikacina" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoAmikacina" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaBaciloGramNegativoAmikacina')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>Gentamicina</b></label>
+            </div>
+           <div class="col bg-light">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoGentamicina" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoGentamicina" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoGentamicina" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaBaciloGramNegativoGentamicina')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+
+        </div> 
+        </div>
+    </div>
+
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>Trimetopima/Sulfametoxazol	
+                </b></label>
+            </div>
+            <div class="col bg-light">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoTrimetoprimaSulfametox" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoTrimetoprimaSulfametox" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoTrimetoprimaSulfametox" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaBaciloGramNegativoTrimetoprimaSulfametox')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div>
+        </div>
+    </div>
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>Ciprofloxacina	
+                </b></label>
+            </div>
+            <div class="col bg-light">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoCiprofloxacina" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoCiprofloxacina" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoCiprofloxacina" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaBaciloGramNegativoCiprofloxacina')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div>
+        </div>
+    </div>
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>Norfloxacino	
+                </b></label>
+            </div>
+            <div class="col bg-light">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoNorfloxacina" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoNorfloxacina" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoNorfloxacina" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaBaciloGramNegativoNorfloxacina')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div>
+        </div>
+    </div>
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>Nitrofurantoína	
+                </b></label>
+            </div>
+            <div class="col">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoNitrofurantoína" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoNitrofurantoína" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoNitrofurantoína" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaBaciloGramNegativoNitrofurantoína')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>Fosfomicina	
+                </b></label>
+            </div>
+            <div class="col bg-light">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoFosfomicina" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoFosfomicina" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoFosfomicina" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaBaciloGramNegativoFosfomicina')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div>
+        </div>
+    </div>
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>Aztreonam	
+                </b></label>
+            </div>
+            <div class="col bg-light">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoAztreonam" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoAztreonam" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoAztreonam" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaBaciloGramNegativoAztreonam')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>Ceftolozane/Tazobactam	
+
+                </b></label>
+            </div>
+          <div class="col bg-light">  
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoCeftolozanetazobactam" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoCeftolozanetazobactam" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoCeftolozanetazobactam" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaBaciloGramNegativoCeftolozanetazobactam')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>Ceftazidima/Avibactam	
+
+
+                </b></label>
+            </div>
+           <div class="col bg-light">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoCeftazidimaavibactam" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoCeftazidimaavibactam" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoCeftazidimaavibactam" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaBaciloGramNegativoCeftazidimaavibactam')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div> 
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>Imipenem	
+
+
+                </b></label>
+            </div>
+            <div class="col bg-light">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoImipenem" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoImipenem" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoImipenem" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaBaciloGramNegativoImipenem')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+
+        </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>Piperacilina/Tazobactam	
+
+
+
+                </b></label>
+            </div>
+            <div class="col bg-light">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoPiperacilinaTazobactam" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoPiperacilinaTazobactam" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoPiperacilinaTazobactam" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaBaciloGramNegativoPiperacilinaTazobactam')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div>
+        </div>
+    </div>
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>Tigecilina	
+
+
+                </b></label>
+            </div>
+            <div class="col bg-light">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoTigecilina" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoTigecilina" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoTigecilina" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaBaciloGramNegativoTigecilina')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div>
+        </div>
+    </div>  
+    </div>
+  </div>
+
+
+</div>
+
+
+<div *ngIf="elementCoco == true">
+
+  <div class="form-group">
+    <label><b>Marque que germen fue aislado</b></label>
+    <div *ngFor="let ck of bacteriasDataList">
+        <label>
+          <input  #refIS  type="checkbox" [value]="ck.label" [checked] = ck.isChecked (click)="changeBacteriasSelection(refIS.value,$event.target.checked)"  />
+          {{ck.label}}
+   
+          <input type="text"  name="recuentoColoniasNro" [value]="ck.recuentoColoniasNro" id="ck.label" placeholder="Recuento de colonias" (change)="changeBacteriasInputSelection(refIS.value,$event.target.value)" />
+        
+
+        
+          <input type="text" name="recuentoColoniasUM" [value]="ck.recuentoColoniasUM" id="ck.label" placeholder="Unidad de medida" disabled/>
+        
+         
+        </label>
+      </div>
+
+</div>
+<div class="form-group">
+    <label><b>En caso de tener otro Germen, escriba aqui</b></label>
+    <input type="text" class="form-control" formControlName="otroGermenAislado" name="otroGermenAislado" placeholder="...">
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+     Antibiograma Coco
+    </div>
+    <div class="card-body">
+      <p> <mark>S</mark>- Sensible <mark>I</mark>- Intermedio <mark>R</mark>- Resistente</p>
+      <div class="form-group">
+                                                  
+        <div class="row">
+            <div class="col">
+                <label><b>Ampicilina</b></label>
+            </div>
+          <div class="col bg-light">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoAmpicilina" id="inlineRadio1" value="sensible" >
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoAmpicilina" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoAmpicilina" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaCocoGramPositivoAmpicilina')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>BenzilPenicilina</b></label>
+            </div>
+          <div class="col bg-light"> 
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoBenzilpenicilina" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoBenzilpenicilina" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoBenzilpenicilina" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaCocoGramPositivoBenzilpenicilina')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div> 
+        </div>
+    </div>
+
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>Cefoxitina Screening</b></label>
+            </div>
+            <div class="col bg-light">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoCefoxitinaScreening" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoCefoxitinaScreening" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoCefoxitinaScreening" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaCocoGramPositivoCefoxitinaScreening')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div>
+        </div>
+    </div>
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>Ceftarolina</b></label>
+            </div>
+          <div class="col bg-light"> 
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoCeftarolina" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoCeftarolina" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoCeftarolina" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaCocoGramPositivoCeftarolina')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div> 
+        </div>
+    </div>
+
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>Ciprofloxacina</b></label>
+            </div>
+            <div class="col bg-light">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaBaciloGramNegativoCeftazidima" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoCiprofloxacina" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoCiprofloxacina" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaCocoGramPositivoCiprofloxacina')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div>
+        </div>
+    </div>
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>Levofloxacina</b></label>
+            </div>
+            <div class="col bg-light">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoLevofloxacina" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoLevofloxacina" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoLevofloxacina" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaCocoGramPositivoLevofloxacina')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>Clindamicina</b></label>
+            </div>
+
+           <div class="col bg-light"> 
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoClindamicina" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoClindamicina" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoClindamicina" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaCocoGramPositivoClindamicina')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>Daptomicina</b></label>
+            </div>
+            <div class="col bg-light">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoDaptomicina" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoDaptomicina" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoDaptomicina" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaCocoGramPositivoDaptomicina')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>Eritromicina</b></label>
+            </div>
+
+            <div class="col bg-light">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoEritromicina" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoEritromicina" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoEritromicina" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaCocoGramPositivoEritromicina')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>Gentamicina nivel alto</b></label>
+            </div>
+            <div class="col bg-light">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoGentamicinaNivelAlto" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoGentamicinaNivelAlto" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoGentamicinaNivelAlto" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaCocoGramPositivoGentamicinaNivelAlto')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>Estreptomicina nivel alto	
+                </b></label>
+            </div>
+            <div class="col bg-light">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoEstreptomicinaNivelAlto" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoEstreptomicinaNivelAlto" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoEstreptomicinaNivelAlto" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaCocoGramPositivoEstreptomicinaNivelAlto')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div>
+        </div>
+    </div>
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>Resistencia inducible a Clindamicina	
+                </b></label>
+            </div>
+
+            <div class="col bg-light">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramResistenciaClindamicina" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramResistenciaClindamicina" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramResistenciaClindamicina" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaCocoGramResistenciaClindamicina')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div>
+        </div>
+    </div>
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>Linezolid	
+                </b></label>
+            </div>
+            <div class="col bg-light">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoLinezolid" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoLinezolid" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoLinezolid" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaCocoGramPositivoLinezolid')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div>
+        </div>
+    </div>
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>Nitrofurantoína	
+                </b></label>
+            </div>
+            <div class="col bg-light">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoNitrofurantoína" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoNitrofurantoína" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoNitrofurantoína" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaCocoGramPositivoNitrofurantoína')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>Oxaciclina	
+                </b></label>
+            </div>
+            <div class="col bg-light">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoOxaciclina" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoOxaciclina" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoOxaciclina" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaCocoGramPositivoOxaciclina')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div>
+        </div>
+    </div>
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>Rifampicina	
+                </b></label>
+            </div>
+
+            <div class="col bg-light">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoRifampicina" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoRifampicina" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoRifampicina" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaCocoGramPositivoRifampicina')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>Tetraciclina	
+
+                </b></label>
+            </div>
+            <div class="col">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoTetraciclina" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoTetraciclina" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoTetraciclina" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaCocoGramPositivoTetraciclina')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>Vancomicina
+
+
+                </b></label>
+            </div>
+            <div class="col bg-light">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoVancomicina" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoVancomicina" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoVancomicina" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaCocoGramPositivoVancomicina')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        
+        <div class="row">
+            <div class="col">
+                <label><b>Trimetoprima/Sulfametoxazol	
+
+
+                </b></label>
+            </div>
+           <div class="col">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoTrimetoprimaSulfametoxazol" id="inlineRadio1" value="sensible">
+            <label class="form-check-label" for="inlineRadio1">S</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoTrimetoprimaSulfametoxazol" id="inlineRadio2" value="intermedio">
+            <label class="form-check-label" for="inlineRadio2">I</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" class="form-control"
+            formControlName="antibiogramaCocoGramPositivoTrimetoprimaSulfametoxazol" id="inlineRadio3" value="resistente">
+            <label class="form-check-label" for="inlineRadio3">R</label>
+          </div>
+          <button (click)="setCheck($event,'antibiogramaCocoGramPositivoTrimetoprimaSulfametoxazol')" type="reset" class="btn-sm btn-warning">Borrar selección</button>
+        </div> 
+
+        </div>
+    </div>
+    </div>
+  </div>
+
+
+</div>
+
+<div *ngIf="elementB == true || elementCoco == true" >
+  <div class="form-group">
+    <label><b>¿Presencia de germen resistente?
+    </b></label>
+    <select #refGR ui-select2 class="form-control input-sm"
+        formControlName="presenciaGermenResistente" uppercase (change)="getSelectedValueCategoriaGermen(refGR.value)" 
+      >
+       
+        <option *ngFor="let item of listaRespuesta; let i = index"
+            value="{{item.valor}}">
+            {{item.descripcionValor}}
+        </option>
+    </select>
+</div>
+
+<div *ngIf="elementCategoriaGermen == true">
+  <div class="form-group">
+    <label><b>Categoria</b></label>
+    <input type="text" class="form-control" formControlName="categoriaGermen" name="categoriaGermen" placeholder="...">
+  </div>
+
+</div>
+
+
+
+
+</div>
+
+
+
+
+                            </div>
+                          </div>
+                         
+                        </div>
+                      </div>   
+
+
+                       
+
+                        <div class="row justify-content-center">
+                          <div class="col-lg-5">
+                            <div class="form-group">
+                              <label><b>Comentarios </b></label>
+                              <input type="text" class="form-control"
+                                  formControlName="comentarios"
+                                  name="comentarios" placeholder="...">
+                            </div>
+
+                            <div class="card"  style="background-color: #fc805b ;">
+                              <div class="card-body">
+                                <div class="form-group">
+                                  <label><b>Fecha de Ingreso de Muestra-(Formato dia/mes/año)</b></label>
+                                  <input type="date" class="form-control" 
+                                      formControlName="fechaIngresoMuestra" name="fechaIngresoMuestra"
+                                      placeholder="...">
+                            
+                              </div>
+                              </div>
+                            </div>
+
+
+                            <div class="form-group">
+                              <label><b>Encargado de registro (Nombre y Apellido de quien cargo) </b></label>
+                              <input type="text" class="form-control"
+                                  formControlName="firmaEncargado"
+                                  name="firmaEncargado" placeholder="..." [class.is-invalid]="firmaEncargadoNoValido">
+                                  <small *ngIf="firmaEncargadoNoValido" class="text-danger">
+                                    Ingrese firma
+                                  </small>
+                            </div>
+                          </div>
+                          
+
+ 
+
+                        </div>
+
+
+
+
+                        <br>
+                        <!--Personas Fechas-->
+                        <div class="form-row justify-content-center" [hidden]="crear" style="display: none;">
+                            <div class="col-lg-5">
+                                <label><b>Fecha creaci&oacute;n</b></label>
+                                <input type="datetime-local" class="form-control" formControlName="fechaCreacion"
+                                    name="fechaCreacion" placeholder="Fecha creaci&oacute;n">
+
+                                <label><b>Fecha modificaci&oacute;n</b></label>
+                                <input type="datetime-local" class="form-control" formControlName="fechaModificacion"
+                                    name="fechaModificacion" placeholder="Fecha modificaci&oacute;n">
+                            </div>
+                            <div class="col-lg-5">
+                                <label><b>Usuario creaci&oacute;n</b></label>
+                                <input type="text" class="form-control" formControlName="usuarioCreacion"
+                                    name="usuarioCreacion" placeholder="Usuario creaci&oacute;n">
+
+                                <label><b>Usuario modificaci&oacute;n</b></label>
+                                <input type="text" class="form-control" formControlName="usuarioModificacion"
+                                    name="usuarioModificacion" placeholder="Usuario modificaci&oacute;n">
+                            </div>
+                        </div>
+                        <hr>
+                        <br>
+                        <div *ngIf="alertGuardar" class="alert alert-danger alert-dismissible fade show text-center"
+                            role="alert">
+                            Existen campos obligatorios. Verifique.
+                            <button type="button" (click)="cerrarAlertGuardar()" class="close" data-dismiss="alert"
+                                aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-primary ">
+                                <i class="fa fa-save"></i>
+                                Guardar
+                            </button>
+                            &nbsp;&nbsp;
+                            <button (click)="limpiar($event)" [hidden]="!crear" class="btn btn-warning"><i
+                                    class="fas fa-backspace"></i> Limpiar</button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    
+</body>

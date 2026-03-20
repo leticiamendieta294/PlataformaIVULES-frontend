@@ -1,0 +1,155 @@
+<head>
+  <link rel="stylesheet" href="parametros.component.css">
+</head>
+
+<body>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/inicio">Inicio</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Listado de par&aacute;metros </li>
+  </ol>  
+  
+  <div class="card">
+    <h3 class="card-header" data-toggle="collapse" data-target="#collapseBuscador"
+        aria-expanded="true" aria-controls="collapseBuscador">Filtros de b&uacute;squeda</h3>
+    <div class="card-body collapse show" id="collapseBuscador">
+      <form [formGroup]="buscadorForm">
+        <div class="form-row justify-content-center">
+          <div>            
+            <p>
+              <mat-form-field appearance="fill">
+                <mat-label>Par&aacute;metro id</mat-label>
+                <input matInput matInput type="number" placeholder="Par&aacute;metro id" 
+                  formControlName="parametroId" name="parametroId" id="parametroId">
+              </mat-form-field>
+            </p>
+
+            <p>
+              <mat-form-field appearance="fill">
+                <mat-label>Estado</mat-label>
+                <mat-select formControlName="estado" name = "estado">
+                  <mat-option value="null">TODOS</mat-option>
+                  <mat-option value="A">ACTIVO</mat-option>
+                  <mat-option value="I">INACTIVO</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </p>            
+          </div>
+          &nbsp; &nbsp; &nbsp;
+          <div>
+            <p>
+              <mat-form-field appearance="fill">
+                <mat-label>C&oacute;digo</mat-label>
+                <input matInput matInput type="text" placeholder="C&oacute;digo" 
+                  formControlName="codigoParametro" name="codigoParametro" id="codigoParametro">
+              </mat-form-field>
+            </p>  
+            <p>
+              <mat-form-field appearance="fill">
+                <mat-label>Valor</mat-label>
+                <input matInput matInput type="text" placeholder="Valor" 
+                  formControlName="valor" name="valor" id="valor">
+              </mat-form-field>
+            </p>
+          </div>
+          &nbsp; &nbsp; &nbsp;
+          <div>
+            <p>
+              <mat-form-field appearance="fill">
+                <mat-label>Descripci&oacute;n</mat-label>
+                <input matInput matInput type="text" placeholder="Nombres" 
+                  formControlName="descripcion" name="descripcion" id="descripcion">
+              </mat-form-field>
+            </p>
+            <p>
+              <mat-form-field appearance="fill">
+                <mat-label>Descripci&oacute;n valor</mat-label>
+                <input matInput matInput type="text" placeholder="Descripci&oacute;n valor" 
+                  formControlName="descripcionValor" name="descripcionValor" id="descripcionValor">
+              </mat-form-field>
+            </p>            
+          </div> 
+          &nbsp; &nbsp; &nbsp;
+          <div class="align-self-center">
+              <button type="submit" (click)="buscadorParametros($event)" class="btn btn-success"><i class="fas fa-search"></i> Buscar</button>
+              &nbsp;
+              <button (click)="limpiar($event)" class="btn btn-warning"><i class="fas fa-backspace"></i> Limpiar</button>
+          </div>     
+        </div>
+      </form>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col text-right">
+      <button routerLink="/inicio/parametro/nuevo"
+              class="btn btn-primary">
+        <i class="fa fa-plus"></i>
+        Agregar
+      </button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="table-responsive table-hover">
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-sm">
+        <thead>
+          <tr class="table-primary">
+            <th scope="col">#</th>
+            <th scope="col">Id</th>
+            <th scope="col">C&oacute;digo</th>
+            <th scope="col">Descripci&oacute;n</th>
+            <!--th scope="col">Nombre</th-->
+            <th scope="col">Valor</th>
+            <th scope="col">Descripci&oacute;n valor</th>
+            <th scope="col">Estado</th>     
+            <th scope="col">Editar</th>
+            <th scope="col">Borrar</th>
+          </tr>      
+        </thead>
+        <tbody>
+          <tr *ngFor="let parametro of parametros; let i = index">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ parametro.parametroId }}</td>
+            <td>{{ parametro.codigoParametro }}</td>
+            <td>{{ parametro.descripcion }}</td>
+            <!--td>{{ parametro.nombre }}</td-->
+            <td>{{ parametro.valor }}</td>
+            <td>{{ parametro.descripcionValor }}</td>
+            <td>{{ parametro.estado }}</td>    
+
+            <td (click)="editar($event, parametro.parametroId)">
+              <a class="btn btn-info">
+                <i class="fa fa-edit"></i>
+              </a>
+            </td>
+            <td (click)="borrarParametro($event, parametro)">  
+              <button class="btn btn-danger">
+              <i class="fa fa-trash"></i></button>
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="cargando" class="alert alert-light text-center mt-3 animated fadeIn faster">
+          <td></td>
+          <td></td>
+          <!--td></td-->
+          <td></td>
+          <td></td>       
+          <td>
+            <h4 class="alert-heading">Cargando</h4>
+            <p>
+              <i class="fa fa-sync-alt fa-spin fa-2x"></i>
+            </p>
+            <p class="mb-0">
+              Espere por favor
+            </p>
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <br><br>
+</body>

@@ -1,0 +1,149 @@
+<head>
+  <link rel="stylesheet" href="personas.component.css">
+</head>
+
+<body>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Listado de pacientes </li>
+  </ol>  
+
+  <div class="card">
+    <h3 class="card-header" data-toggle="collapse" data-target="#collapseBuscador"
+        aria-expanded="true" aria-controls="collapseBuscador">Filtros de b&uacute;squeda</h3> 
+    <div class="card-body collapse show" id="collapseBuscador">
+      <form [formGroup]="buscadorForm">
+        <div class="form-row justify-content-center">
+          <div>
+           <p>
+            <mat-form-field appearance="fill">
+              <mat-label>Codigo</mat-label>
+              <input matInput matInput type="text" placeholder="codigo" 
+                formControlName="codigo" name="codigo" id="codigo">
+            </mat-form-field>
+            </p>
+            
+            <p>
+              <mat-form-field appearance="fill">
+                <mat-label>C&eacute;dula</mat-label>
+                <input matInput matInput type="text" placeholder="C&eacute;dula" 
+                  formControlName="cedula" name="cedula" id="cedula">
+              </mat-form-field>
+            </p>
+          </div>
+          &nbsp; &nbsp; &nbsp;
+          <div>
+            <p>
+              <mat-form-field appearance="fill">
+                <mat-label>Nombres</mat-label>
+                <input matInput matInput type="text" placeholder="Nombres" 
+                  formControlName="nombres" name="nombres" id="nombres">
+              </mat-form-field>
+            </p>
+
+            <p>
+              <mat-form-field appearance="fill">
+                <mat-label>Apellidos</mat-label>
+                <input matInput matInput type="text" placeholder="Apellidos" 
+                  formControlName="apellidos" name="apellidos" id="apellidos">
+              </mat-form-field>
+            </p>
+          </div>
+          &nbsp; &nbsp; &nbsp;
+          <div class="align-self-center">
+              <button type="submit" (click)="buscadorPersonas($event)" class="btn btn-success"><i class="fas fa-search"></i> Buscar</button>
+              &nbsp;
+              <button (click)="limpiar($event)" class="btn btn-warning"><i class="fas fa-backspace"></i> Limpiar</button>
+          </div>
+        </div>        
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col text-right">
+      <button routerLink="/inicio/persona/nuevo"
+              class="btn btn-primary">
+        <i class="fa fa-plus"></i>
+        Agregar paciente
+      </button>
+    </div>
+  </div>
+
+  <div class="card">
+    <!--Tabla de datos-->
+    <div class="table-responsive table-hover">
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-sm">
+        <thead>
+          <tr class="table-primary">
+            <th scope="col">#</th>
+            <!--<th scope="col">Id</th>-->
+            <th scope="col">Codigo</th>
+            <th scope="col">C&eacute;dula</th>
+            <th scope="col">Nombres</th>
+            <th scope="col">Apellidos</th>   
+            <th scope="col">Sexo</th>
+            <th scope="col">Tiene laboratorio?</th>         
+            <th scope="col">Fecha de creación</th>      
+            <!-- <th scope="col">Fecha Nacimiento</th>
+            <th scope="col">Nacionalidad</th> -->
+            <th scope="col">Seguimiento</th>            
+            <th scope="col">Editar</th>
+           <!-- <th scope="col">Borrar</th>-->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let persona of personas; let i = index">
+            <th scope="row">{{ i + 1 }}</th>
+          <!--  <td>{{ persona.personaId }}</td>-->
+            <td>{{ persona.codigo }}</td>
+            <td>{{ persona.cedula }}</td>
+            <td>{{ persona.nombres }}</td>
+            <td>{{ persona.apellidos }}</td>
+            <td>{{ persona.sexo }}</td>
+            <td  *ngIf="persona.opcionLaboratorio==null"  [ngClass]="{ redClass: persona.opcionLaboratorio==null}">NO</td>
+            <td  *ngIf="persona.opcionLaboratorio!=null"  [ngClass]="{ greenClass: persona.opcionLaboratorio!=null}">SI</td>   
+                
+            <!--<td>{{ persona.fechaNacimiento | date : 'dd-MM-yyyy'  }}</td>
+            <td>{{ persona.nacionalidad }}</td>-->
+            <td>{{ persona.fechaCreacion| date:"dd-MM-yyyy" }}</td>       
+            <td (click)="opciones($event, persona.personaId)">
+              <button type="button" class="btn btn-warning" >Ver</button>
+            </td>
+            <td (click)="editar($event, persona.personaId)">
+              <a class="btn btn-info">
+                <i class="fa fa-edit"></i>
+              </a>
+            </td>
+           <!-- <td (click)="borrarPersona($event, persona)">  
+              <button class="btn btn-danger">
+              <i class="fa fa-trash"></i></button>
+            </td>-->
+          </tr>
+        </tbody>
+        <tbody *ngIf="cargando" class="alert alert-light text-center mt-3 animated fadeIn faster">
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>
+            <h4 class="alert-heading">Cargando</h4>
+            <p>
+              <i class="fa fa-sync-alt fa-spin fa-2x"></i>
+            </p>
+            <p class="mb-0">
+              Espere por favor
+            </p>
+          </td>
+          <td></td>
+          <td></td>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <br><br>
+</body>

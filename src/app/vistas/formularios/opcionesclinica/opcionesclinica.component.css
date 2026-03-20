@@ -1,0 +1,16 @@
+@import './../../formularios/css/formularios.css';
+
+.greenClass{
+    color: white;
+    background-color: green;
+}
+
+.redClass{
+    color: white;
+    background-color: red;
+}
+
+.yellowClass{
+    color: black;
+    background-color: yellow;
+}

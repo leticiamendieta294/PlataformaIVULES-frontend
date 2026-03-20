@@ -1,0 +1,44 @@
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Seguimiento 1 </li>
+  </ol>  
+
+  <h1 style="text-align: center;">Seguimiento 1</h1>
+
+   
+   <div class="card">
+    <!--Tabla de datos-->
+    <div class="table-responsive table-hover">
+   <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Codigo</th>
+            <th>Cedula</th>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Fecha Creación</th>
+            <th>laboratorio?</th>
+            <th>Ver</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let seguimiento of seguimientos; let i = index">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ seguimiento.personas.codigo }}</td>
+            <td>{{  seguimiento.personas.cedula }}</td>
+            <td>{{  seguimiento.personas.nombres }}</td>
+            <td>{{  seguimiento.personas.apellidos }}</td>
+            <td>{{  seguimiento.fechaCreacion | date:"dd-MM-yyyy"  }}</td>
+            <td  *ngIf="seguimiento.laboratorioUno==null"  [ngClass]="{ redClass: seguimiento.laboratorioUno==null}">NO</td>
+            <td  *ngIf="seguimiento.laboratorioUno!=null"  [ngClass]="{ greenClass: seguimiento.laboratorioUno!=null}">SI</td>
+            <td (click)="opciones($event, seguimiento.personas.personaId)">
+                <button type="button" class="btn btn-warning" >Ver</button>
+              </td>  
+        </tr>
+        </tbody>
+      </table>
+    </div>
+</div>
+<br><br>
+    

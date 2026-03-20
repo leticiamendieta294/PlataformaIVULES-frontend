@@ -1,0 +1,80 @@
+<div class="text-center" *ngIf="isLogged; else loggedOut">
+    <h2>Ya has iniciado sesión</h2>
+</div>
+
+<ng-template #loggedOut>
+    <body style="background-color: hsl(0, 0%, 96%)">
+    <section class="" >
+        <!-- Jumbotron -->
+        <div class="px-9 py-5 px-md-5 text-center text-lg-start"  style="background-color: hsl(0, 0%, 96%)">
+          <div class="container">
+            <div class="row gx-lg-5 align-items-center">
+                
+              <div class="col-lg-6 mb-5 mb-lg-0">
+                <img src="../assets/images/fcm_logo.jpg" class="img-thumbnail" alt="..." width="100" height="120">
+                <img src="../assets/images/fpuna.jpg" class="img-thumbnail" alt="..." width="100" height="120">
+                <h1 class="my-5 display-3 fw-bold ls-tight">
+                  Sistema IVULES <br />
+                  <span class="text-primary">FP-UNA</span>
+                  <br>
+                  <span class="text-primary">FCM-UNA</span>
+                </h1>
+                
+              </div>
+      
+              <div class="col-lg-6 mb-5 mb-lg-0">
+                <div class="card">
+                  <div class="card-body py-5 px-md-5">
+                    <form [formGroup]="forma" (ngSubmit)="onLogin()" novalidate>
+                        <div *ngIf="alert" class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{errMsj}}
+                            <button type="button" (click)="cerrarAlert()" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                     
+                      <!-- Usuario input -->
+                      <div class="form-outline mb-4">
+                        <input autofocus type="text" name="nombreUsuario" id="nombreUsuario" class="form-control"
+                        formControlName="nombreUsuario" placeholder="Escriba aquí su nombre de usuario" required>
+                        <label class="form-label" for="form3Example3">Usuario</label>
+                      </div>
+      
+                      <!-- Password input -->
+                      <div class="form-outline mb-4">
+                        <input type="password" name="password" id="password" class="form-control"
+                            formControlName="password" placeholder="********" required>
+                        <label class="form-label" for="form3Example4">Contraseña</label>
+                      </div>
+      
+                     
+      
+                      <!-- Submit button -->
+                      <button type="submit" class="btn btn-primary btn-block mb-4" [disabled]="!forma.valid">
+                        Iniciar sesión
+                      </button>
+      
+                      <div *ngIf="load" width="25%" height="25%">   
+                        <div class="text-center">
+                            <img src="../assets/images/loading.gif">
+                        </div>                            
+                    </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Jumbotron -->
+      </section>
+      <!-- Section: Design Block -->
+      <footer class="footer">
+        <!-- Copyright -->
+  <div class="footer-copyright text-center bg-secondary text-white py-3">© 2024 Copyright:
+    Desarrollado por Leticia Mendieta
+  </div>
+  <!-- Copyright -->
+      </footer>
+    </body>
+</ng-template>

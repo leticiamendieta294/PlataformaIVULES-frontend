@@ -1,0 +1,232 @@
+<head>
+  <link rel="stylesheet" href="persona.component.css">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+   
+    
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a  href="/">Inicio /</a>
+        </li>
+        <li class="nav-item">
+          <a href="/"> Listado de pacientes /</a>
+        </li>
+        <li class="nav-item active" style="color: grey;">
+          Paciente
+        </li>
+      </ul>
+      <span class="navbar-text">
+        <button class="btn btn-secondary" (click)="opciones($event)">
+          <i class="fa fa-arrow-left"></i>
+          Regresar
+        </button>
+      </span>
+    </div>
+  </nav>
+
+  <div class="row animated fadeIn faster">
+    <div class="col">
+      <div class="card">
+        <div class="card-header text-center" style="background-color: antiquewhite;">
+                Datos Personales
+        </div>
+        <div class="card-body">
+
+          <form [formGroup]="personaForm" (ngSubmit)="guardar( )">
+            
+            <!-- Datos Personales-->
+            <div class="row justify-content-center">
+              <div class="col-lg-5">
+                <div class="form-group" style="display: none;">
+                  <label><b>Id</b></label>
+                  <input type="number"
+                        class="form-control"
+                        placeholder="Persona Id"
+                        formControlName="personaId" 
+                        name="id">
+                  <small class="form-text text-muted">Este campo es autogenerado</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="row justify-content-center">
+              <div class="col-lg-5">
+                <div class="form-group">
+                  <label><b>Codigo</b><span class="requerido"> *</span></label>
+                  <input autofocus type="text"
+                        class="form-control" placeholder="Codigo"
+                        formControlName="codigo" name="codigo"
+                        [class.is-invalid]="codigoNoValido">
+                    <small *ngIf="codigoNoValido" class="text-danger">
+                      Ingrese codigo
+                    </small>
+                </div>
+
+               
+                <div class="form-group">
+                  <label><b>C&eacute;dula</b><span class="requerido"> *</span></label>
+                    <input type="text"
+                          class="form-control" placeholder="C&eacute;dula"                      
+                          name="cedula" formControlName="cedula"
+                          [class.is-invalid]="cedulaNoValido"
+                          (blur)="buscarPersona($event)">
+                      <small *ngIf="cedulaNoValido" class="text-danger">
+                        Ingrese c&eacute;dula
+                      </small>
+                </div>    
+                
+                <div class="form-group">
+                  <label><b>Nombres</b><span class="requerido"> *</span></label>
+                  <input autofocus type="text"
+                        class="form-control" placeholder="Nombres"
+                        formControlName="nombres" name="nombres"
+                        [class.is-invalid]="nombreNoValido">
+                    <small *ngIf="nombreNoValido" class="text-danger">
+                      Ingrese nombres
+                    </small>
+                </div>
+
+                <div class="form-group">
+                  <label><b>Apellidos</b><span class="requerido"> *</span></label>
+                  <input type="text"
+                        class="form-control"
+                        formControlName="apellidos"
+                        name="apellidos"
+                        placeholder="Apellidos"
+                        [class.is-invalid]="apellidoNoValido">
+                  <small *ngIf="apellidoNoValido" class="text-danger">
+                    Ingrese apellidos
+                  </small>
+                </div>
+
+                <div class="form-group">
+                  <label><b>Sexo</b></label>
+                  <select ui-select2 class="form-control input-sm"
+                      formControlName="sexo"
+                      uppercase required [class.is-invalid]="sexoNoValido">
+                      <option value=null>Seleccione</option>
+                      <option *ngFor="let item of listaSexo; let i = index"
+                        value="{{item.valor}}">
+                          {{item.descripcionValor}}
+                      </option>
+                  </select>
+                  <small *ngIf="sexoNoValido" class="text-danger">
+                    Ingrese sexo
+                  </small>
+                </div>
+
+                <div class="form-group">
+                  <label><b>Ciudad en el que reside</b></label>
+                  <input type="text"
+                          class="form-control"
+                          formControlName="ciudadResidencia"
+                          name="lugarNacimiento"
+                          placeholder="ciudad en el que reside">
+                </div>
+                <div class="form-group">                           
+                  <label><b>Edad</b></label>
+                  <input type="number"
+                        class="form-control"
+                        formControlName="edad"
+                        name="edad"
+                        placeholder="Edad"
+                        [class.is-invalid]="edadNoValido" required>
+                        <small *ngIf="edadNoValido" class="text-danger">
+                          Debe ser mayor de edad
+                        </small>
+                </div>
+                <div class="form-group">
+                  <label><b>Estado Civil</b></label>
+                  <select ui-seldivect2 placeholder="Estado Civil" 
+                    class="form-control input-sm"          
+                    name = "estadoCivil"
+                    formControlName="estadoCivil"
+                    uppercase>
+                    <option value=null>Seleccione</option>
+                    <option *ngFor="let item of listaEstadoCivil; let i = index"
+                      value="{{item.valor}}">
+                        {{item.descripcionValor}}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label><b>Celular</b></label>
+                  <input type="text"
+                        class="form-control"
+                        formControlName="celular"
+                        name="celular"
+                        placeholder="Celular">
+                </div>
+
+               
+           
+              </div>
+
+             
+            </div>
+            <br>
+          
+    
+            <br>
+            <!--Personas Fechas-->
+            <div class="form-row justify-content-center" [hidden]="crear">
+              <div class="col-lg-5"> 
+                <label><b>Fecha creaci&oacute;n</b></label>
+                <input type="datetime-local"
+                      class="form-control"
+                      formControlName="fechaCreacion"
+                      name="fechaCreacion"
+                      placeholder="Fecha creaci&oacute;n">
+
+                <label><b>Fecha modificaci&oacute;n</b></label>
+                <input type="datetime-local"
+                      class="form-control"
+                      formControlName="fechaModificacion"
+                      name="fechaModificacion"
+                      placeholder="Fecha modificaci&oacute;n">
+              </div>
+              <div class="col-lg-5"> 
+                <label><b>Usuario creaci&oacute;n</b></label>
+                <input type="text"
+                      class="form-control"
+                      formControlName="usuarioCreacion"
+                      name="usuarioCreacion"
+                      placeholder="Usuario creaci&oacute;n">
+
+                <label><b>Usuario modificaci&oacute;n</b></label>
+                <input type="text"
+                      class="form-control"
+                      formControlName="usuarioModificacion"
+                      name="usuarioModificacion"
+                      placeholder="Usuario modificaci&oacute;n">
+              </div> 
+            </div>
+            <hr>
+            <br>
+            <div *ngIf="alertGuardar" class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+              Existen campos obligatorios. Verifique.
+              <button type="button" (click)="cerrarAlertGuardar()" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="form-group text-center">
+              <button type="submit"
+                      class="btn btn-primary ">
+                <i class="fa fa-save"></i>
+                Guardar
+              </button>
+              &nbsp;&nbsp;
+              <button (click)="limpiar($event)" [hidden]="!crear" 
+                    class="btn btn-warning"><i class="fas fa-backspace"></i> Limpiar</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
